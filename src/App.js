@@ -53,12 +53,11 @@ function App() {
             <Grid
                 style={{marginTop: '12vh'}}
                 container
-                spacing={6}
                 alignItems="center"
             >
 
-                <Grid item xs={12} align="center">
-                    <Typography variant='h2'>Cody Richter</Typography>
+                <Grid item xs={12} align="center" style={{marginBottom: '4vh'}}>
+                    <Typography variant='h2' style={{marginBottom: '2vh'}}>Cody Richter</Typography>
                     {count ? (
                         <Typist avgTypingDelay={140} cursor={{show: false}} onTypingDone={() => setCount(0)}>
                             <Typography variant='h4' component='h4' display="inline">&#8203;</Typography>
@@ -85,7 +84,7 @@ function App() {
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Avatar alt="Cody Richter" src="https://i.imgur.com/aRBoAwp.jpg" style={{width: 175, height:175}} />
+                    <Avatar variant='circular' alt="Cody Richter" src="https://i.imgur.com/p7x8ZqG.png" style={{width: 175, height:175}} />
                 </Grid>
 
             </Grid>
@@ -103,21 +102,21 @@ function App() {
             >
                 <BottomNavigationAction
                     label="Github"
-                    icon={<GitHubIcon fontSize='large' />}
+                    icon={<GitHubIcon style={{fontSize: '4em'}} />}
                     component={'a'}
-                    href="https://www.linkedin.com/in/cody-richter/"
+                    href="https://github.com/CodyRichter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="LinkedIn"
-                    icon={<LinkedInIcon fontSize='large' />}
+                    icon={<LinkedInIcon style={{fontSize: '4em'}} />}
                     component={'a'}
                     href="https://www.linkedin.com/in/cody-richter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="Website"
-                    onClick={() => setEmailDialogOpen(true)} icon={<EmailIcon fontSize='large' />}
+                    onClick={() => setEmailDialogOpen(true)} icon={<EmailIcon style={{fontSize: '5em'}} />}
                 />
             </BottomNavigation>
 
