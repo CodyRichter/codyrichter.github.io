@@ -69,7 +69,9 @@ function App() {
                             <Typography variant='h4' component='h4' display="inline">Innovates</Typography>
                             <Typist.Backspace count={7} delay={3000} />
                             <Typography variant='h4' component='h4' display="inline">vents</Typography>
-                            <Typist.Backspace count={7} delay={3000} />
+                            <Typist.Backspace count={6} delay={3000} />
+                            <Typography variant='h4' component='h4' display="inline">mproves</Typography>
+                            <Typist.Backspace count={8} delay={3000} />
                             <Typography variant='h4' component='h4' display="inline">Designs</Typography>
                             <Typist.Backspace count={5} delay={3000} />
                             <Typography variant='h4' component='h4' display="inline">velops</Typography>
