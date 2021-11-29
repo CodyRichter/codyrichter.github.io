@@ -12,12 +12,7 @@ import ReactGA from "react-ga4";
 
 export default function Projects() {
 
-    ReactGA.initialize([
-        {
-            trackingId: "G-KJTRQV8R1M",
-        },
-    ]);
-
+    ReactGA.initialize("G-KJTRQV8R1M");
     ReactGA.send({ hitType: "pageview", page: "/projects" });
 
     let [, setPinned] = useState([]);
