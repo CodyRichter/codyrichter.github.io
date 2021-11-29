@@ -62,7 +62,7 @@ function Home() {
 
                 <Grid item xs={12} align="center">
                     <Avatar variant='circle' alt="Cody Richter" src="https://i.imgur.com/oAIdMh7.jpg"
-                            style={{width: 175, height: 175}}/>
+                            style={{width: 200, height: 200}}/>
                 </Grid>
 
             </Grid>
