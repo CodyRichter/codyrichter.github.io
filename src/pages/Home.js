@@ -22,7 +22,6 @@ function Home() {
     let [count, setCount] = useState(0);
 
     useEffect(() => {
-        // document.title = `You clicked ${count} times`;
         setCount(1);
     }, [count]);
 
@@ -62,7 +61,7 @@ function Home() {
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Avatar variant='circular' alt="Cody Richter" src="https://i.imgur.com/p7x8ZqG.png"
+                    <Avatar variant='circle' alt="Cody Richter" src="https://i.imgur.com/oAIdMh7.jpg"
                             style={{width: 175, height: 175}}/>
                 </Grid>
 
@@ -81,21 +80,21 @@ function Home() {
             >
                 <BottomNavigationAction
                     label="Github"
-                    icon={<GitHubIcon style={{fontSize: '4em'}}/>}
+                    icon={<GitHubIcon style={{fontSize: '4em', color:'black'}}/>}
                     component={'a'}
                     href="https://github.com/CodyRichter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="LinkedIn"
-                    icon={<LinkedInIcon style={{fontSize: '4em'}}/>}
+                    icon={<LinkedInIcon style={{fontSize: '4em', color:'black'}}/>}
                     component={'a'}
                     href="https://www.linkedin.com/in/cody-richter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="Website"
-                    onClick={() => setEmailDialogOpen(true)} icon={<EmailIcon style={{fontSize: '5em'}}/>}
+                    onClick={() => setEmailDialogOpen(true)} icon={<EmailIcon style={{fontSize: '5em', color:'black'}}/>}
                 />
             </BottomNavigation>
 
