@@ -12,12 +12,17 @@ import Avatar from "@material-ui/core/Avatar";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import Typist from "react-typist";
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 function Home() {
 
-    ReactGA.initialize('UA-tracking-id');
-    ReactGA.pageview('Home');
+    ReactGA.initialize([
+        {
+            trackingId: "G-KJTRQV8R1M",
+        },
+    ]);
+
+    ReactGA.send({ hitType: "pageview", page: "/home" });
 
 
     let [emailDialogOpen, setEmailDialogOpen] = useState(false);
