@@ -10,10 +10,10 @@ import IconButton from "@material-ui/core/IconButton";
 import {GitHub} from "@material-ui/icons";
 import ReactGA from "react-ga4";
 
-export default function Projects() {
+ReactGA.initialize("G-KJTRQV8R1M");
+ReactGA.send({ hitType: "pageview", page: "/projects" });
 
-    ReactGA.initialize("G-KJTRQV8R1M");
-    ReactGA.send({ hitType: "pageview", page: "/projects" });
+export default function Projects() {
 
     let [, setPinned] = useState([]);
 

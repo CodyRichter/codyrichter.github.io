@@ -14,11 +14,10 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import Typist from "react-typist";
 import ReactGA from 'react-ga4';
 
+ReactGA.initialize("G-KJTRQV8R1M");
+ReactGA.send({ hitType: "pageview", page: "/home" });
+
 function Home() {
-
-    ReactGA.initialize("G-KJTRQV8R1M");
-    ReactGA.send({ hitType: "pageview", page: "/home" });
-
 
     let [emailDialogOpen, setEmailDialogOpen] = useState(false);
 
