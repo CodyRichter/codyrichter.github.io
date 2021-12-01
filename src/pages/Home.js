@@ -1,16 +1,16 @@
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import EmailIcon from '@material-ui/icons/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EmailIcon from '@mui/icons-material/Email';
 import React, {useEffect, useState} from "react";
-import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import Avatar from "@material-ui/core/Avatar";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import Grid from "@mui/material/Grid";
+import {Typography} from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import Avatar from "@mui/material/Avatar";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Typist from "react-typist";
 
 function Home() {
@@ -60,7 +60,7 @@ function Home() {
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Avatar variant='circle' alt="Cody Richter" src="https://i.imgur.com/oAIdMh7.jpg"
+                    <Avatar variant="circular" alt="Cody Richter" src="https://i.imgur.com/oAIdMh7.jpg"
                             style={{width: 200, height: 200}}/>
                 </Grid>
 
@@ -79,21 +79,22 @@ function Home() {
             >
                 <BottomNavigationAction
                     label="Github"
-                    icon={<GitHubIcon style={{fontSize: '4em', color:'black'}}/>}
+                    icon={<GitHubIcon style={{fontSize: '4em', color: 'black'}}/>}
                     component={'a'}
                     href="https://github.com/CodyRichter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="LinkedIn"
-                    icon={<LinkedInIcon style={{fontSize: '4em', color:'black'}}/>}
+                    icon={<LinkedInIcon style={{fontSize: '4em', color: 'black'}}/>}
                     component={'a'}
                     href="https://www.linkedin.com/in/cody-richter/"
                     target="_blank"
                 />
                 <BottomNavigationAction
                     label="Website"
-                    onClick={() => setEmailDialogOpen(true)} icon={<EmailIcon style={{fontSize: '5em', color:'black'}}/>}
+                    onClick={() => setEmailDialogOpen(true)}
+                    icon={<EmailIcon style={{fontSize: '5em', color: 'black'}}/>}
                 />
             </BottomNavigation>
 
@@ -106,7 +107,7 @@ function Home() {
                 <Grid
                     container
                     alignItems="center"
-                    justify="center"
+                    justifyContent="center"
                 >
                     <Grid item align="center">
                         <DialogTitle id="email-dialog-head">Via Email</DialogTitle>
@@ -119,8 +120,7 @@ function Home() {
                 </Grid>
             </Dialog>
         </div>
-
-    )
+    );
 }
 
 export default Home;

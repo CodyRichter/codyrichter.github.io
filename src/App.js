@@ -1,16 +1,18 @@
 import React from "react";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {ThemeProvider} from "@material-ui/styles";
+import {createTheme} from '@mui/material/styles';
+import {ThemeProvider} from "@mui/styles";
+import {StyledEngineProvider} from '@mui/material/styles';
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
 } from "react-router-dom";
 import SideNavigation from "./Components/SideNavigation";
+import TimelinePage from "./pages/TimelinePage";
 
-const theme = createMuiTheme({
+const theme = createTheme({
     typography: {
         h4: {
             fontFamily: 'Source Code Pro'
@@ -21,20 +23,19 @@ const theme = createMuiTheme({
 function App() {
 
     return (
-        <ThemeProvider theme={theme}>
-            <Router>
-                <SideNavigation />
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <SideNavigation/>
 
-                <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/projects">
-                        <Projects />
-                    </Route>
-                </Switch>
-            </Router>
-        </ThemeProvider>
+                    <Routes>
+                        <Route exact path="/" element={<Home/>}/>
+                        <Route path="/projects" element={<Projects/>}/>
+                        <Route path="/timeline" element={<TimelinePage/>}/>
+                    </Routes>
+                </Router>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
 }
 

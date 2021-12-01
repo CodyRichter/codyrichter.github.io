@@ -1,21 +1,21 @@
-import Drawer from "@material-ui/core/Drawer";
+import Drawer from "@mui/material/Drawer";
 import React, {useState} from "react";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MenuIcon from '@material-ui/icons/Menu';
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Toolbar from "@material-ui/core/Toolbar";
-import HomeIcon from '@material-ui/icons/Home';
-import ComputerIcon from '@material-ui/icons/Computer';
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import {Timeline as TimelineIcon} from "@mui/icons-material";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ComputerIcon from '@mui/icons-material/Computer';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from "@material-ui/core/Grid";
-import useTheme from "@material-ui/core/styles/useTheme";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {useTheme} from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
+import Grid from "@mui/material/Grid";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 const useStyles = makeStyles({
@@ -52,44 +52,51 @@ export default function SideNavigation() {
     return (
         <div>
 
-                {!drawerOpen &&
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={() => setDrawerOpen(true)}
-                    edge="start"
-                    className={matches ? classes.openButton : classes.mobileOpenButton}
-                >
-                    <MenuIcon />
-                </IconButton>
-                }
+            {!drawerOpen &&
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={() => setDrawerOpen(true)}
+                edge="start"
+                className={matches ? classes.openButton : classes.mobileOpenButton}
+                size="large">
+                <MenuIcon/>
+            </IconButton>
+            }
 
             <Drawer
                 variant="persistent"
                 anchor="left"
                 open={drawerOpen}
-                classes={matches ? { paper: classes.paper } : { paper: classes.mobilePaper }}
+                classes={matches ? {paper: classes.paper} : {paper: classes.mobilePaper}}
                 className={classes.drawer}
             >
-                <Grid container justify="flex-end" alignItems="center" style={{background: '#ffffff', border: '1px solid gray'}}>
+                <Grid container justifyContent="flex-end" alignItems="center"
+                      style={{background: '#ffffff', border: '1px solid gray'}}>
                     <Grid item>
-                        <IconButton onClick={() => setDrawerOpen(false)}>
-                           <ChevronLeftIcon style={{fill: 'black'}} />
+                        <IconButton onClick={() => setDrawerOpen(false)} size="large">
+                            <ChevronLeftIcon style={{fill: 'black'}}/>
                         </IconButton>
                     </Grid>
                 </Grid>
-                <Divider />
+                <Divider/>
                 <List>
-                    <ListItem button component={Link} to='/' onClick={() => setDrawerOpen(false)} style={{marginBottom: '2vh'}}>
-                        <ListItemIcon><HomeIcon /></ListItemIcon>
-                        <ListItemText primary='Home' />
+                    <ListItem button component={Link} to='/' onClick={() => setDrawerOpen(false)}
+                              style={{marginBottom: '2vh'}}>
+                        <ListItemIcon><HomeIcon/></ListItemIcon>
+                        <ListItemText primary='Home'/>
                     </ListItem>
-                    <ListItem button component={Link} to='/projects' onClick={() => setDrawerOpen(false)}>
-                        <ListItemIcon><ComputerIcon /></ListItemIcon>
-                        <ListItemText primary='Projects' />
+                    <ListItem button component={Link} to='/projects' onClick={() => setDrawerOpen(false)}
+                              style={{marginBottom: '2vh'}}>
+                        <ListItemIcon><ComputerIcon/></ListItemIcon>
+                        <ListItemText primary='Projects'/>
+                    </ListItem>
+                    <ListItem button component={Link} to='/timeline' onClick={() => setDrawerOpen(false)}>
+                        <ListItemIcon><TimelineIcon/></ListItemIcon>
+                        <ListItemText primary='Timeline'/>
                     </ListItem>
                 </List>
             </Drawer>
         </div>
-    )
+    );
 }
