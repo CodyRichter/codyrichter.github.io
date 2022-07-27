@@ -8,14 +8,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import {CardContent, CardHeader, Container} from "@mui/material";
-import {
-    ArrowUpward,
-    Computer,
-    Engineering,
-    HistoryEdu, LinkedIn,
-    Search,
-    Security
-} from "@mui/icons-material";
+import {ArrowUpward, Computer, Engineering, HistoryEdu, LinkedIn, Search, Security} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import {TimelineOppositeContent} from "@mui/lab";
 import IconButton from "@mui/material/IconButton";
@@ -80,7 +73,8 @@ export default function TimelinePage() {
                   justifyContent="center"
                   alignItems="center">
                 <Grid item xs={12} md={8}>
-                    <Card component={Card} elevation={4} style={{background: '#F9F9FF', height: '100%', borderRadius: '1em'}}>
+                    <Card component={Card} elevation={4}
+                          style={{background: '#F9F9FF', height: '100%', borderRadius: '1em'}}>
                         <CardHeader
                             action={
                                 <IconButton
