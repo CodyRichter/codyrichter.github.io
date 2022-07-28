@@ -57,9 +57,6 @@ function App() {
                                 <Route exact path="/" element={<Home/>}/>
                                 <Route path="/projects" element={<Projects/>}/>
                                 <Route path="/experience" element={<TimelinePage/>}/>
-
-
-                                {/*<Route component={NotFound}/>*/}
                             </Routes>
                         </Grid>
                         <Grid item md={2} xs={0}/>
