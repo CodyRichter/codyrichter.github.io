@@ -20,9 +20,9 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 
-const GrayTextTypography = withStyles({
+const WhiteTextTypography = withStyles({
     root: {
-        color: "#2e3442",
+        color: "#ffffff",
         fontFamily: 'Source Code Pro'
     }
 })(Typography);
@@ -50,7 +50,7 @@ function Home() {
                 </Grid>
 
                 <Grid item xs={12} align="center" style={{marginBottom: '2vh', marginTop: '2vh'}}>
-                    <Typography variant='h2' style={{marginBottom: '2vh'}}>Cody Richter</Typography>
+                    <WhiteTextTypography variant='h2' style={{marginBottom: '2vh'}}>Cody Richter</WhiteTextTypography>
                     <AutoTypeTerminal/>
                 </Grid>
 
@@ -62,17 +62,11 @@ function Home() {
                         alignItems="center"
                         spacing={1}
                     >
-                        <Place fontSize='large'/>
-                        <GrayTextTypography variant="h4" className='code'>Amherst, MA</GrayTextTypography>
+                        <Place fontSize='large' style={{ color: 'white' }}/>
+                        <WhiteTextTypography variant="h4" className='code'>Amherst, MA</WhiteTextTypography>
 
                     </Stack>
                 </Grid>
-
-                {/*<Grid item xs={12}>*/}
-                {/*    <GitHubIcon style={{fontSize: '4em', color: 'black'}}/>*/}
-                {/*    <LinkedInIcon style={{fontSize: '4em', color: 'black'}}/>*/}
-                {/*    <EmailIcon style={{fontSize: '5em', color: 'black'}}/>*/}
-                {/*</Grid>*/}
             </Grid>
 
             <Container sx={{position: 'fixed', bottom: 0, left: 0, right: 0}}>
@@ -85,14 +79,14 @@ function Home() {
                 >
                     <BottomNavigationAction
                         label="Github"
-                        icon={<GitHubIcon style={{fontSize: '4em', color: 'black'}}/>}
+                        icon={<GitHubIcon style={{fontSize: '4em', color: 'white'}}/>}
                         component={'a'}
                         href="https://github.com/CodyRichter/"
                         target="_blank"
                     />
                     <BottomNavigationAction
                         label="LinkedIn"
-                        icon={<LinkedInIcon style={{fontSize: '4em', color: 'black'}}/>}
+                        icon={<LinkedInIcon style={{fontSize: '4em', color: 'white'}}/>}
                         component={'a'}
                         href="https://www.linkedin.com/in/cody-richter/"
                         target="_blank"
@@ -100,7 +94,7 @@ function Home() {
                     <BottomNavigationAction
                         label="Website"
                         onClick={() => setEmailDialogOpen(true)}
-                        icon={<EmailIcon style={{fontSize: '5em', color: 'black'}}/>}
+                        icon={<EmailIcon style={{fontSize: '5em', color: 'white'}}/>}
                     />
                 </BottomNavigation>
             </Container>

@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {createTheme, StyledEngineProvider} from '@mui/material/styles';
 import {ThemeProvider} from "@mui/styles";
 import Home from "./pages/home/Home";
 import Projects from "./pages/projects/Projects";
+import {particlePattern} from './styles/backgroundParticles'
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import TimelinePage from "./pages/timeline/TimelinePage";
 import HeaderNav from "./shared/header/HeaderNav";
 import Grid from "@mui/material/Grid";
 import {Divider} from "@mui/material";
+
+import Particles from "react-tsparticles";
+import { loadLinksPreset } from "tsparticles-preset-links";
 
 
 const themeLight = createTheme({
@@ -34,6 +38,14 @@ function App() {
 
     const [light, setLight] = React.useState(false);
 
+    const particlesInit = useCallback(async (engine) => {
+        await loadLinksPreset(engine);
+    }, []);
+
+    const particlesLoaded = useCallback(async (container) => {
+        await console.log(container);
+    }, []);
+
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={light ? themeLight : themeDark}>
@@ -53,11 +65,14 @@ function App() {
                     <Grid container>
                         <Grid item md={2} xs={0}/>
                         <Grid item md={8} xs={12}>
-                            <Routes>
-                                <Route exact path="/" element={<Home/>}/>
-                                <Route path="/projects" element={<Projects/>}/>
-                                <Route path="/experience" element={<TimelinePage/>}/>
-                            </Routes>
+                                <Particles id="tsparticles" options={particlePattern} init={particlesInit}
+                                           loaded={particlesLoaded}/>
+                                <Routes>
+                                    <Route exact path="/" element={<Home/>}/>
+                                    <Route path="/projects" element={<Projects/>}/>
+                                    <Route path="/experience" element={<TimelinePage/>}/>
+                                </Routes>
+
                         </Grid>
                         <Grid item md={2} xs={0}/>
                     </Grid>
@@ -65,7 +80,7 @@ function App() {
                 </Router>
             </ThemeProvider>
         </StyledEngineProvider>
-    );
+);
 }
 
 export default App;
