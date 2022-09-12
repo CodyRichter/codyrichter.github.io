@@ -3,6 +3,7 @@ export let particlePattern = {
         enable: true,
         zIndex: -1
     },
+    detectRetina: true,
     preset: "links",
     fps_limit: 60,
     particles: {
@@ -18,17 +19,10 @@ export let particlePattern = {
             value: "#232741"
         },
     },
-    // number: {
-    //     density: {
-    //         enable: false,
-    //         area: 800,
-    //     },
-    //     value: 80,
-    // },
     interactivity: {
         onresize:{
             density_auto: true,
-            density_area: 10
+            density_area: 5
         }
     }
 
