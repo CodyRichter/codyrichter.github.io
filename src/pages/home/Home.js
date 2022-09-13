@@ -45,7 +45,7 @@ function Home() {
                 <Grid item xs={12} align="center">
                     <Avatar
                         variant="circular"
-                        alt="Cody Richter"
+                        alt="A picture of Cody Richter"
                         src={`data:image/png;base64,${b64Image}`}
                         style={isMobile ? {width: 150, height: 150} : {width: 200, height: 200}}
                     />
