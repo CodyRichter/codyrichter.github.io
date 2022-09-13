@@ -4,7 +4,7 @@ import {ThemeProvider} from "@mui/styles";
 import Home from "./pages/home/Home";
 import Projects from "./pages/projects/Projects";
 import {particlePattern} from './styles/backgroundParticles'
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {HashRouter as Router, Route, Routes} from "react-router-dom";
 import TimelinePage from "./pages/timeline/TimelinePage";
 import HeaderNav from "./shared/header/HeaderNav";
 import Grid from "@mui/material/Grid";
