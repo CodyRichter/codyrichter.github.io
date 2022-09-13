@@ -3,11 +3,13 @@ import {Grid, styled, Tab, Tabs} from "@mui/material";
 import {Link, useLocation} from "react-router-dom";
 
 import {Construction, Home, Wysiwyg} from "@mui/icons-material";
+import useIsMobile from "../../utils/useIsMobile";
 
 export default function HeaderNav() {
 
     const [menuIndex, setMenuIndexValue] = React.useState(0);
-    let activePage = useLocation();
+    const activePage = useLocation();
+    const isMobile = useIsMobile();
 
     function LinkTab(props) {
         return (
@@ -59,19 +61,19 @@ export default function HeaderNav() {
                     <LinkTab
                         icon={<Home/>}
                         iconPosition="start"
-                        label="Home"
+                        label={isMobile ? "" : "Home"}
                         pathname="/"
                     />
                     <LinkTab
                         icon={<Construction/>}
                         iconPosition="start"
-                        label="Projects"
+                        label={isMobile ? "" : "Projects"}
                         pathname="/projects"
                     />
                     <LinkTab
                         icon={<Wysiwyg/>}
                         iconPosition="start"
-                        label="Experience"
+                        label={isMobile ? "" : "Experience"}
                         pathname="/experience"
                     />
                 </SmallTabs>

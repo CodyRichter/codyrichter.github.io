@@ -3,14 +3,18 @@ import Typist from "react-typist";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {Typography} from "@mui/material";
 import {withStyles} from "@mui/styles";
+import useIsMobile from "../../utils/useIsMobile";
 
 
 export default function AutoTypeTerminal() {
 
+    const isMobile = useIsMobile();
+
     const WhiteTextTypography = withStyles({
         root: {
             color: "#FFFFFF",
-            fontFamily: 'Source Code Pro'
+            fontFamily: 'Source Code Pro',
+            fontSize: isMobile ? '18pt' : '24pt'
         }
     })(Typography);
 
@@ -45,7 +49,7 @@ export default function AutoTypeTerminal() {
                         >|</WhiteTextTypography>
                     }} onTypingDone={() => setCount(0)}>
 
-                        <ArrowForwardIosIcon style={{color: 'white'}}/>
+                        <ArrowForwardIosIcon style={{color: 'white', fontSize: isMobile ? '15pt' : '20pt'}}/>
                         <WhiteTextTypography variant='h4' component='h4'
                                              display="inline">&#8203;</WhiteTextTypography>
                         <WhiteTextTypography variant='h4' component='h4'

@@ -19,6 +19,7 @@ import {withStyles} from "@mui/styles";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
+import useIsMobile from "../../utils/useIsMobile";
 
 const WhiteTextTypography = withStyles({
     root: {
@@ -31,6 +32,7 @@ const WhiteTextTypography = withStyles({
 function Home() {
 
     const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+    const isMobile = useIsMobile();
 
     return (
         <div>
@@ -45,12 +47,17 @@ function Home() {
                         variant="circular"
                         alt="Cody Richter"
                         src={`data:image/png;base64,${b64Image}`}
-                        style={{width: 200, height: 200}}
+                        style={isMobile ? {width: 150, height: 150} : {width: 200, height: 200}}
                     />
                 </Grid>
 
                 <Grid item xs={12} align="center" style={{marginBottom: '2vh', marginTop: '2vh'}}>
-                    <WhiteTextTypography variant='h2' style={{marginBottom: '2vh'}}>Cody Richter</WhiteTextTypography>
+                    <WhiteTextTypography
+                        variant='h2'
+                        style={{marginBottom: '2vh', fontSize: (isMobile ? '26pt' : '45pt')}}
+                    >
+                        Cody Richter
+                    </WhiteTextTypography>
                     <AutoTypeTerminal/>
                 </Grid>
 
@@ -62,8 +69,12 @@ function Home() {
                         alignItems="center"
                         spacing={1}
                     >
-                        <Place fontSize='large' style={{ color: 'white' }}/>
-                        <WhiteTextTypography variant="h4" className='code'>Amherst, MA</WhiteTextTypography>
+                        <Place style={{fontSize: (isMobile ? '2em' : '3em'), color: 'white' }}/>
+                        <WhiteTextTypography
+                            variant="h4"
+                            className='code'
+                            style={{fontSize: (isMobile ? '20pt' : '26pt')}}
+                        >Amherst, MA</WhiteTextTypography>
 
                     </Stack>
                 </Grid>
@@ -79,14 +90,14 @@ function Home() {
                 >
                     <BottomNavigationAction
                         label="Github"
-                        icon={<GitHubIcon style={{fontSize: '4em', color: 'white'}}/>}
+                        icon={<GitHubIcon style={{fontSize: (isMobile ? '2em' : '4em'), color: 'white'}}/>}
                         component={'a'}
                         href="https://github.com/CodyRichter/"
                         target="_blank"
                     />
                     <BottomNavigationAction
                         label="LinkedIn"
-                        icon={<LinkedInIcon style={{fontSize: '4em', color: 'white'}}/>}
+                        icon={<LinkedInIcon style={{fontSize: (isMobile ? '2em' : '4em'), color: 'white'}}/>}
                         component={'a'}
                         href="https://www.linkedin.com/in/cody-richter/"
                         target="_blank"
@@ -94,7 +105,7 @@ function Home() {
                     <BottomNavigationAction
                         label="Website"
                         onClick={() => setEmailDialogOpen(true)}
-                        icon={<EmailIcon style={{fontSize: '5em', color: 'white'}}/>}
+                        icon={<EmailIcon style={{fontSize: (isMobile ? '3em' : '5em'), color: 'white'}}/>}
                     />
                 </BottomNavigation>
             </Container>
