@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Typography } from "@mui/material";
-import { withStyles } from "@mui/styles";
-import useIsMobile from "../../utils/useIsMobile";
+
+import { IoIosArrowForward } from "react-icons/io";
+import { Text } from "@mantine/core";
 import Typist from "react-typist-component";
+import useIsMobile from "../../utils/useIsMobile";
+
+// Create a component that wraps the mantine text component
+// and adds a white color and source code pro font
+const TerminalText = (props) => (
+  <Text
+    style={{
+      color: "#ffffff",
+      fontFamily: "Source Code Pro",
+      fontSize: props.isMobile ? "18pt" : "24pt",
+    }}
+    span
+  >
+    {props.children}
+  </Text>
+);
 
 export default function AutoTypeTerminal() {
   const isMobile = useIsMobile();
@@ -15,6 +30,10 @@ export default function AutoTypeTerminal() {
     setCount(1);
   }, [count]);
 
+  useEffect(() => {
+    console.log(isMobile);
+  }, [isMobile]);
+
   return (
     <div
       style={{
@@ -23,7 +42,7 @@ export default function AutoTypeTerminal() {
         paddingLeft: "1em",
         paddingRight: "1em",
         paddingBottom: "1vh",
-        maxWidth: "50%",
+        minWidth: isMobile ? "80vw" : "40vw",
         borderRadius: "0.75em",
         textAlign: "left",
       }}
@@ -31,146 +50,34 @@ export default function AutoTypeTerminal() {
       <>
         <Typist
           typingDelay={140}
-          cursor={
-            <Typography
-              style={{
-                color: "#FFFFFF",
-                fontFamily: "Source Code Pro",
-                fontSize: isMobile ? "18pt" : "24pt",
-              }}
-              variant="h4"
-              component="h4"
-              display="inline"
-            >
-              |
-            </Typography>
-          }
+          cursor={<TerminalText isMobile={isMobile}>|</TerminalText>}
         >
-          <ArrowForwardIosIcon
+          <IoIosArrowForward
             style={{ color: "white", fontSize: isMobile ? "15pt" : "20pt" }}
           />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            &#8203;
-          </Typography>
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            Codes
-          </Typography>
+          <TerminalText isMobile={isMobile}>&#8203;</TerminalText>
+          <TerminalText isMobile={isMobile}>Codes</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={4} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            reates
-          </Typography>
+          <TerminalText isMobile={isMobile}>reates</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={7} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            Innovates
-          </Typography>
+          <TerminalText isMobile={isMobile}>Innovates</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={7} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            vents
-          </Typography>
+          <TerminalText isMobile={isMobile}>vents</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={6} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            mproves
-          </Typography>
+          <TerminalText isMobile={isMobile}>mproves</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={8} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            Designs
-          </Typography>
+          <TerminalText isMobile={isMobile}>Designs</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={5} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            velops
-          </Typography>
+          <TerminalText isMobile={isMobile}>velops</TerminalText>
           <Typist.Delay ms={3000} />
           <Typist.Backspace count={7} />
-          <Typography
-            style={{
-              color: "#FFFFFF",
-              fontFamily: "Source Code Pro",
-              fontSize: isMobile ? "18pt" : "24pt",
-            }}
-            variant="h4"
-            component="h4"
-            display="inline"
-          >
-            iscovers Solutions
-          </Typography>
+          <TerminalText isMobile={isMobile}>iscovers Solutions</TerminalText>
           <Typist.Delay ms={5000} />
         </Typist>
       </>
