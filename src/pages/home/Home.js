@@ -107,7 +107,7 @@ function Home() {
                 <Menu.Item
                   icon={<CiMail size={14} />}
                   onClick={() => {
-                    window.open("mailto:cody@richter.codes", "_blank");
+                    window.open("mailto:cody@richter.codes");
                   }}
                 >
                   Send Email

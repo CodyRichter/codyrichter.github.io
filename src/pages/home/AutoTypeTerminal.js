@@ -30,10 +30,6 @@ export default function AutoTypeTerminal() {
     setCount(1);
   }, [count]);
 
-  useEffect(() => {
-    console.log(isMobile);
-  }, [isMobile]);
-
   return (
     <div
       style={{

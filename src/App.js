@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 
 import ErrorPage from "./pages/ErrorPage";
+import FloatingSideNav from "./shared/nav/FloatingSideNav";
+import { FooterCentered } from "./shared/footer/FooterCentered";
 import Home from "./pages/home/Home";
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
@@ -34,6 +36,7 @@ function App() {
             path="/"
             element={
               <>
+                <FloatingSideNav />
                 <Home />
                 {!isMobile && (
                   <Particles
@@ -41,9 +44,18 @@ function App() {
                     options={particlePattern}
                     init={particlesInit}
                     loaded={particlesLoaded}
+                    style={{
+                      position: "absolute",
+                      height: "100%",
+                      top: "0",
+                      left: "0",
+                      width: "100%",
+                      zIndex: -1,
+                    }}
                   />
                 )}
                 <Projects />
+                <FooterCentered />
               </>
             }
           />

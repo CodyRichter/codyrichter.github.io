@@ -4,6 +4,7 @@ import {
   Divider,
   Group,
   Paper,
+  Stack,
   Text,
   createStyles,
   rem,
@@ -12,6 +13,7 @@ import React, { cloneElement } from "react";
 
 import { FaGithub } from "react-icons/fa";
 import { GiPapers } from "react-icons/gi";
+import { IoIosPaper } from "react-icons/io";
 import { isEmpty } from "lodash";
 
 const useStyles = createStyles((theme) => ({
@@ -56,16 +58,16 @@ const ProjectCard = ({
 
   return (
     <Paper withBorder radius="md" className={classes.card}>
-      <Text fz="lg" fw={500} mt="md" span>
-        {cloneElement(icon, { color: iconColor })} &nbsp; {title}
-      </Text>
-      <Text fz="sm" c="dimmed" mt={5}>
-        {description}
-      </Text>
+      <Stack justify="space-between">
+        <>
+          <Text fz="lg" fw={500} mt="md" span>
+            {cloneElement(icon, { color: iconColor })} &nbsp; {title}
+          </Text>
+          <Text fz="sm" c="dimmed" mt={5}>
+            {description}
+          </Text>
+        </>
 
-      <Divider mt="md" mb="sm" />
-
-      <Center>
         <Group>
           {!isEmpty(githubLink) && (
             <ActionIcon
@@ -83,11 +85,11 @@ const ProjectCard = ({
               size="xl"
               onClick={() => window.open(paperLink, "_blank")}
             >
-              <GiPapers size={20} />
+              <IoIosPaper size={20} />
             </ActionIcon>
           )}
         </Group>
-      </Center>
+      </Stack>
     </Paper>
   );
 };

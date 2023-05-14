@@ -1,6 +1,6 @@
 export let particlePattern = {
   fullScreen: {
-    enable: true,
+    enable: false,
     zIndex: -1,
   },
   detectRetina: true,
