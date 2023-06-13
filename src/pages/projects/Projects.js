@@ -1,9 +1,9 @@
 import { Center, Container, Grid, Text, Title } from "@mantine/core";
 import { GiDoubleFish, GiShield } from "react-icons/gi";
+import { HiOutlineCloud, HiTerminal } from "react-icons/hi";
 
 import { Element } from "react-scroll";
 import { GrScorecard } from "react-icons/gr";
-import { HiTerminal } from "react-icons/hi";
 import { ImMap2 } from "react-icons/im";
 import ProjectCard from "./ProjectCard";
 import React from "react";
@@ -101,6 +101,20 @@ export default function Projects() {
                   paperLink="https://github-website-paper-downloads.s3.amazonaws.com/cv-fish-cody-richter.pdf"
                   icon={<GiDoubleFish />}
                   iconColor="orange"
+                />
+              </Grid.Col>
+
+              <Grid.Col sm={5} xs={12}>
+                <ProjectCard
+                  title="CloudTutor"
+                  description="CloudTutor is an intelligent tutoring system designed to
+            provide students with a personalized learning experience in cloud computing.
+            This paper describes the design of the CloudTutor system, and
+            presents a framework for the development of the intelligent tutoring system and its
+            effectiveness in improving student learning."
+                  paperLink="https://github-website-paper-downloads.s3.amazonaws.com/cloudtutor-cody-richter.pdf"
+                  icon={<HiOutlineCloud />}
+                  iconColor="blue"
                 />
               </Grid.Col>
             </Grid>

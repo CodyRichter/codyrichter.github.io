@@ -12,7 +12,6 @@ import {
 import React, { cloneElement } from "react";
 
 import { FaGithub } from "react-icons/fa";
-import { GiPapers } from "react-icons/gi";
 import { IoIosPaper } from "react-icons/io";
 import { isEmpty } from "lodash";
 
@@ -49,7 +48,7 @@ const useStyles = createStyles((theme) => ({
 const ProjectCard = ({
   title,
   description,
-  githubLink,
+  githubLink = null,
   paperLink = null,
   icon,
   iconColor = "black",
