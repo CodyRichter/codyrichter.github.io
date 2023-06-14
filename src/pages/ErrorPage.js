@@ -61,8 +61,7 @@ export default function ErrorPage() {
     <Container className={classes.root}>
       <div className={classes.label}>Error</div>
       <Title className={classes.title}>
-        You might have just discovered a secret place, or simply typed in the
-        address wrong.
+        {error?.status === 404 ? "Page Not Found" : "Something Went Wrong"}
       </Title>
       <Text
         color="dimmed"
@@ -70,9 +69,9 @@ export default function ErrorPage() {
         align="center"
         className={classes.description}
       >
-        For whatever reason, we can't seem to find the page that you're looking
-        for. We apologize for the inconvenience and hope that you can find what
-        you're looking for soon!
+        {error?.status === 404
+          ? "The page you are looking for does not exist."
+          : "An unexpected error has occurred."}
       </Text>
       <Group position="center">
         <Button

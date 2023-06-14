@@ -2,28 +2,52 @@ import {
   Button,
   Card,
   Center,
+  Collapse,
   Divider,
   Stack,
-  Title,
   createStyles,
   rem,
 } from "@mantine/core";
+import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
+import { FiMinimize } from "react-icons/fi";
+import { HiDocument } from "react-icons/hi";
 import React from "react";
-import { scroller } from "react-scroll";
+import { TbHammer } from "react-icons/tb";
+import { useDisclosure } from "@mantine/hooks";
 import useIsMobile from "../../utils/useIsMobile";
 
 const useStyles = createStyles((theme) => ({
-  card: {
+  burgerClosed: {
     position: "fixed",
+    top: "20px",
+    left: "30px",
+    zIndex: 9999,
+    borderRadius: "10%",
+    paddingLeft: "1em",
+    paddingRight: "1em",
+  },
+  burderOpen: {
+    position: "fixed",
+    top: "20px",
+    left: "30px",
     minWidth: "15vw",
-    top: "8vh",
-    left: "3vw",
-    zIndex: 1000,
+    zIndex: 9999,
+    borderRadius: "10px 10px 0px 0px",
+  },
+  collapse: {
+    position: "fixed",
+    top: `calc(20px + 35px)`, // We need to account for the height of the burger button. "md" is 40px by default in Mantine
+    left: "30px",
+    zIndex: 9998,
+  },
+  card: {
+    minWidth: "15vw",
     overflow: "hidden",
-    transition: "transform 150ms ease, box-shadow 100ms ease",
     padding: theme.spacing.xl,
+    boxShadow: theme.shadows.lg,
     paddingLeft: `calc(${theme.spacing.xl} * 2)`,
+    zIndex: 9997,
 
     "&::before": {
       content: '""',
@@ -55,63 +79,72 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function scrollToSection(elementName, containerId) {
-  scroller.scrollTo(elementName, {
-    duration: 1500,
-    delay: 100,
-    smooth: true,
-    containerId: containerId,
-    offset: 10, // Scrolls to element + 10 pixels down the page
-  });
-}
-
-export default function FloatingSideNav() {
+export default function FloatingSideNav({ scrollToSectionByName }) {
   const { classes } = useStyles();
 
   const isMobile = useIsMobile();
+
+  const [opened, { toggle }] = useDisclosure(false);
 
   return isMobile ? (
     <></>
   ) : (
     <>
-      <Card withBorder radius="md" className={classes.card}>
-        <Center>
-          <Stack>
-            <Title order={4} align="center">
-              Navigate
-            </Title>
+      <Button
+        variant="gradient"
+        gradient={{ from: "indigo", to: "cyan" }}
+        size="md"
+        className={opened ? classes.burderOpen : classes.burgerClosed}
+        onClick={toggle}
+      >
+        {opened ? (
+          <>
+            <FiMinimize />
+          </>
+        ) : (
+          <RiMenu3Line />
+        )}
+      </Button>
+      <Collapse in={opened} className={classes.collapse}>
+        <Card withBorder radius="md" className={classes.card}>
+          <Center>
+            <Stack>
+              <Button
+                variant="gradient"
+                gradient={{ from: "indigo", to: "cyan" }}
+                leftIcon={<RiHome2Line />}
+                onClick={() => scrollToSectionByName("home")}
+              >
+                Home
+              </Button>
 
-            <Divider />
+              <Divider />
 
-            <Button
-              variant="gradient"
-              gradient={{ from: "indigo", to: "cyan" }}
-            >
-              Home
-            </Button>
+              <Button
+                variant="gradient"
+                gradient={{ from: "cyan", to: "teal" }}
+                leftIcon={<TbHammer />}
+                onClick={() => scrollToSectionByName("projects")}
+              >
+                Projects
+              </Button>
 
-            <Divider />
+              <Divider />
 
-            <Button
-              variant="gradient"
-              gradient={{ from: "cyan", to: "teal" }}
-              onClick={() =>
-                scrollToSection("ProjectSection", "projectSection")
-              }
-            >
-              Projects
-            </Button>
+              <Button
+                variant="gradient"
+                gradient={{ from: "teal", to: "blue" }}
+                leftIcon={<HiDocument />}
+                onClick={() => scrollToSectionByName("experience")}
+              >
+                Experience
+              </Button>
 
-            <Divider />
-
-            <Button variant="gradient" gradient={{ from: "teal", to: "blue" }}>
-              Experience
-            </Button>
-
-            <Divider />
-          </Stack>
-        </Center>
-      </Card>
+              <Divider />
+            </Stack>
+          </Center>
+        </Card>
+      </Collapse>
     </>
   );
 }

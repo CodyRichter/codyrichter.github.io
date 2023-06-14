@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 
 import ErrorPage from "./pages/ErrorPage";
+import FloatingActionNavButton from "./shared/nav/FloatingActionNavButton";
 import FloatingSideNav from "./shared/nav/FloatingSideNav";
 import { FooterCentered } from "./shared/footer/FooterCentered";
 import Home from "./pages/home/Home";
 import { MantineProvider } from "@mantine/core";
+import NavigationSection from "./shared/nav/NavigationSection";
 import { Notifications } from "@mantine/notifications";
 import Particles from "react-tsparticles";
 import Projects from "./pages/projects/Projects";
@@ -27,6 +29,46 @@ function App() {
 
   const particlesLoaded = useCallback(async (container) => {}, []);
 
+  // Track what section is currently being viewed. Updating the state will
+  // not change what the user sees -- it is only used by the browser
+  // to tell the app what section it thinks is being viewed.
+  const [currentSection, setCurrentSection] = React.useState(0);
+
+  const navigationMap = {
+    home: 0,
+    projects: 1,
+  };
+
+  const lastSectionId = Object.keys(navigationMap).length - 1;
+
+  const scrollToSectionById = (id) => {
+    // Scroll to the next section
+
+    id = id % Object.keys(navigationMap).length;
+
+    if (id === 0) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const nextSectionElement = document.getElementById(`section-${id}`);
+      if (nextSectionElement) {
+        nextSectionElement.scrollIntoView({ behavior: "smooth" });
+      }
+      setTimeout(() => {
+        nextSectionElement.style.transition = "transform 1s";
+      }, 100);
+    }
+  };
+
+  const scrollToSectionByName = (name) => {
+    if (Object.keys(navigationMap).includes(name)) {
+      scrollToSectionById(navigationMap[name]);
+    } else {
+      console.error(
+        `Internal Error: Unable to Scroll to Section "${name}". Section does not exist.`
+      );
+    }
+  };
+
   const router = createHashRouter([
     {
       path: "*",
@@ -36,8 +78,22 @@ function App() {
             path="/"
             element={
               <>
-                <FloatingSideNav />
-                <Home />
+                <FloatingSideNav
+                  scrollToSectionByName={scrollToSectionByName}
+                />
+                <FloatingActionNavButton
+                  currentSectionId={currentSection}
+                  finalSectionId={lastSectionId}
+                  scrollToNextSection={() =>
+                    scrollToSectionById(currentSection + 1)
+                  }
+                />
+                <NavigationSection
+                  id={navigationMap["home"]}
+                  onVisible={(id) => setCurrentSection(id)}
+                >
+                  <Home />
+                </NavigationSection>
                 {!isMobile && (
                   <Particles
                     id="tsparticles"
@@ -54,7 +110,12 @@ function App() {
                     }}
                   />
                 )}
-                <Projects />
+                <NavigationSection
+                  id={navigationMap["projects"]}
+                  onVisible={(id) => setCurrentSection(id)}
+                >
+                  <Projects />
+                </NavigationSection>
                 <FooterCentered />
               </>
             }
