@@ -11,7 +11,7 @@ import {
 import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
 import { FiMinimize } from "react-icons/fi";
-import { HiDocument } from "react-icons/hi";
+import { HiOutlineDocument } from "react-icons/hi";
 import React from "react";
 import { TbHammer } from "react-icons/tb";
 import { useDisclosure } from "@mantine/hooks";
@@ -134,7 +134,7 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
               <Button
                 variant="gradient"
                 gradient={{ from: "teal", to: "blue" }}
-                leftIcon={<HiDocument />}
+                leftIcon={<HiOutlineDocument />}
                 onClick={() => scrollToSectionByName("experience")}
               >
                 Experience
