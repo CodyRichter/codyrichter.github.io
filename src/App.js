@@ -6,6 +6,7 @@ import {
   createHashRouter,
 } from "react-router-dom";
 
+import Bio from "./pages/bio/Bio";
 import ErrorPage from "./pages/ErrorPage";
 import FloatingActionNavButton from "./shared/nav/FloatingActionNavButton";
 import FloatingSideNav from "./shared/nav/FloatingSideNav";
@@ -36,7 +37,8 @@ function App() {
 
   const navigationMap = {
     home: 0,
-    projects: 1,
+    bio: 1,
+    projects: 2,
   };
 
   const lastSectionId = Object.keys(navigationMap).length - 1;
@@ -110,6 +112,14 @@ function App() {
                     }}
                   />
                 )}
+
+                <NavigationSection
+                  id={navigationMap["bio"]}
+                  onVisible={(id) => setCurrentSection(id)}
+                >
+                  <Bio />
+                </NavigationSection>
+
                 <NavigationSection
                   id={navigationMap["projects"]}
                   onVisible={(id) => setCurrentSection(id)}

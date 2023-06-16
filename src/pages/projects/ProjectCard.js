@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  createStyles,
-  rem,
-} from "@mantine/core";
+import { Button, Card, Text, createStyles, rem } from "@mantine/core";
 import React, { cloneElement } from "react";
 
 import { FaGithub } from "react-icons/fa";
@@ -15,7 +7,8 @@ import { isEmpty } from "lodash";
 
 const useStyles = createStyles((theme) => ({
   card: {
-    position: "relative",
+    display: "flex",
+    flexDirection: "column",
     height: "100%",
     overflow: "hidden",
     transition: "transform 150ms ease, box-shadow 100ms ease",
@@ -54,40 +47,47 @@ const ProjectCard = ({
   const { classes } = useStyles();
 
   return (
-    <Paper withBorder radius="md" className={classes.card}>
-      <Stack justify="space-between">
-        <>
-          <Text fz="lg" fw={500} mt="md" span>
-            {cloneElement(icon, { color: iconColor })} &nbsp; {title}
-          </Text>
-          <Text fz="sm" c="dimmed" mt={5}>
-            {description}
-          </Text>
-        </>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      className={classes.card}
+    >
+      <Card.Section withBorder inheritPadding py="xs">
+        {cloneElement(icon, { color: iconColor, size: "1em" })} &nbsp; {title}
+      </Card.Section>
+      <Card.Section inheritPadding style={{ flex: "1" }}>
+        <br />
+        <Text size="sm" color="dimmed">
+          {description}
+        </Text>
+        <br />
+      </Card.Section>
+      <Button.Group style={{ marginTop: "auto" }}>
+        {!isEmpty(githubLink) && (
+          <Button
+            fullWidth
+            leftIcon={<FaGithub size={20} />}
+            onClick={() => window.open(githubLink, "_blank")}
+            variant="outline"
+          >
+            View Code
+          </Button>
+        )}
 
-        <Group>
-          {!isEmpty(githubLink) && (
-            <ActionIcon
-              color="blue"
-              size="xl"
-              onClick={() => window.open(githubLink, "_blank")}
-            >
-              <FaGithub size={20} />
-            </ActionIcon>
-          )}
-
-          {!isEmpty(paperLink) && (
-            <ActionIcon
-              color="blue"
-              size="xl"
-              onClick={() => window.open(paperLink, "_blank")}
-            >
-              <IoIosPaper size={20} />
-            </ActionIcon>
-          )}
-        </Group>
-      </Stack>
-    </Paper>
+        {!isEmpty(paperLink) && (
+          <Button
+            fullWidth
+            leftIcon={<IoIosPaper size={20} />}
+            onClick={() => window.open(paperLink, "_blank")}
+            variant="outline"
+          >
+            Read Paper
+          </Button>
+        )}
+      </Button.Group>
+    </Card>
   );
 };
 

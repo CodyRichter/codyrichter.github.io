@@ -12,6 +12,7 @@ import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
 import { FiMinimize } from "react-icons/fi";
 import { HiOutlineDocument } from "react-icons/hi";
+import { MdOutlinePerson } from "react-icons/md";
 import React from "react";
 import { TbHammer } from "react-icons/tb";
 import { useDisclosure } from "@mantine/hooks";
@@ -27,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: "1em",
     paddingRight: "1em",
   },
-  burderOpen: {
+  burgerOpen: {
     position: "fixed",
     top: "20px",
     left: "30px",
@@ -94,7 +95,7 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
         variant="gradient"
         gradient={{ from: "indigo", to: "cyan" }}
         size="md"
-        className={opened ? classes.burderOpen : classes.burgerClosed}
+        className={opened ? classes.burgerOpen : classes.burgerClosed}
         onClick={toggle}
       >
         {opened ? (
@@ -123,6 +124,17 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
               <Button
                 variant="gradient"
                 gradient={{ from: "cyan", to: "teal" }}
+                leftIcon={<MdOutlinePerson />}
+                onClick={() => scrollToSectionByName("bio")}
+              >
+                About
+              </Button>
+
+              <Divider />
+
+              <Button
+                variant="gradient"
+                gradient={{ from: "teal", to: "blue" }}
                 leftIcon={<TbHammer />}
                 onClick={() => scrollToSectionByName("projects")}
               >
@@ -133,7 +145,7 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
 
               <Button
                 variant="gradient"
-                gradient={{ from: "teal", to: "blue" }}
+                gradient={{ from: "blue", to: "teal" }}
                 leftIcon={<HiOutlineDocument />}
                 onClick={() => scrollToSectionByName("experience")}
               >

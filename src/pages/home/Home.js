@@ -142,7 +142,7 @@ function Home() {
               className="code"
               style={{ fontSize: isMobile ? "20pt" : "26pt" }}
             >
-              Amherst, MA
+              Seattle, WA
             </WhiteText>
           </Center>
         </Grid.Col>
