@@ -6,8 +6,9 @@ import { GrScorecard } from "react-icons/gr";
 import { ImMap2 } from "react-icons/im";
 import ProjectCard from "./ProjectCard";
 import React from "react";
+import { useInView } from "react-intersection-observer";
 
-export default function Projects() {
+export default function Projects({ section, onVisible }) {
   const projects = [
     {
       title: "Hackathon Dashboard",
@@ -65,8 +66,18 @@ export default function Projects() {
     },
   ];
 
+  const { ref } = useInView({
+    threshold: 0.6,
+    onChange: (inView, entry) => inView && onVisible(section),
+  });
+
   return (
-    <div style={{ backgroundColor: "#ffffff", marginTop: "4vh" }}>
+    <div
+      style={{ backgroundColor: "#ffffff", marginTop: "4vh" }}
+      key={`section-${section}`}
+      id={`section-${section}`}
+      ref={ref}
+    >
       <Divider style={{ marginBottom: "1vh" }} />
 
       <Grid justify="center" gutter="lg">

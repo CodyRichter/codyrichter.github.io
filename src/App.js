@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Route,
   RouterProvider,
@@ -13,7 +13,6 @@ import FloatingSideNav from "./shared/nav/FloatingSideNav";
 import { FooterCentered } from "./shared/footer/FooterCentered";
 import Home from "./pages/home/Home";
 import { MantineProvider } from "@mantine/core";
-import NavigationSection from "./shared/nav/NavigationSection";
 import { Notifications } from "@mantine/notifications";
 import Particles from "react-tsparticles";
 import Projects from "./pages/projects/Projects";
@@ -30,23 +29,18 @@ function App() {
 
   const particlesLoaded = useCallback(async (container) => {}, []);
 
-  // Track what section is currently being viewed. Updating the state will
-  // not change what the user sees -- it is only used by the browser
-  // to tell the app what section it thinks is being viewed.
-  const [currentSection, setCurrentSection] = React.useState(0);
+  const [activeSection, setActiveSection] = useState(0);
 
-  const navigationMap = {
+  const sectionMap = {
     home: 0,
-    bio: 1,
+    about: 1,
     projects: 2,
   };
-
-  const lastSectionId = Object.keys(navigationMap).length - 1;
 
   const scrollToSectionById = (id) => {
     // Scroll to the next section
 
-    id = id % Object.keys(navigationMap).length;
+    id = id % Object.keys(sectionMap).length;
 
     if (id === 0) {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -62,8 +56,8 @@ function App() {
   };
 
   const scrollToSectionByName = (name) => {
-    if (Object.keys(navigationMap).includes(name)) {
-      scrollToSectionById(navigationMap[name]);
+    if (Object.keys(sectionMap).includes(name)) {
+      scrollToSectionById(sectionMap[name]);
     } else {
       console.error(
         `Internal Error: Unable to Scroll to Section "${name}". Section does not exist.`
@@ -84,18 +78,18 @@ function App() {
                   scrollToSectionByName={scrollToSectionByName}
                 />
                 <FloatingActionNavButton
-                  currentSectionId={currentSection}
-                  finalSectionId={lastSectionId}
+                  currentSectionId={activeSection}
+                  finalSectionId={Object.keys(sectionMap).length - 1}
                   scrollToNextSection={() =>
-                    scrollToSectionById(currentSection + 1)
+                    scrollToSectionById(activeSection + 1)
                   }
                 />
-                <NavigationSection
-                  id={navigationMap["home"]}
-                  onVisible={(id) => setCurrentSection(id)}
-                >
-                  <Home />
-                </NavigationSection>
+
+                <Home
+                  section={sectionMap["home"]}
+                  onVisible={() => setActiveSection(sectionMap["home"])}
+                />
+
                 {!isMobile && (
                   <Particles
                     id="tsparticles"
@@ -113,19 +107,15 @@ function App() {
                   />
                 )}
 
-                <NavigationSection
-                  id={navigationMap["bio"]}
-                  onVisible={(id) => setCurrentSection(id)}
-                >
-                  <Bio />
-                </NavigationSection>
+                <Bio
+                  section={sectionMap["about"]}
+                  onVisible={() => setActiveSection(sectionMap["about"])}
+                />
 
-                <NavigationSection
-                  id={navigationMap["projects"]}
-                  onVisible={(id) => setCurrentSection(id)}
-                >
-                  <Projects />
-                </NavigationSection>
+                <Projects
+                  section={sectionMap["projects"]}
+                  onVisible={() => setActiveSection(sectionMap["projects"])}
+                />
                 <FooterCentered />
               </>
             }

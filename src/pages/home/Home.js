@@ -15,6 +15,7 @@ import React from "react";
 import { VscGithub } from "react-icons/vsc";
 import { b64Image } from "./b64Image";
 import { notifications } from "@mantine/notifications";
+import { useInView } from "react-intersection-observer";
 import useIsMobile from "../../utils/useIsMobile";
 
 const WhiteText = (props) => (
@@ -29,11 +30,16 @@ const WhiteText = (props) => (
   </Text>
 );
 
-function Home() {
+function Home({ section, onVisible }) {
   const isMobile = useIsMobile();
 
+  const { ref } = useInView({
+    threshold: 0.6,
+    onChange: (inView, entry) => inView && onVisible(section),
+  });
+
   return (
-    <div>
+    <div key={`section-${section}`} id={`section-${section}`} ref={ref}>
       <Grid style={{ marginTop: "12vh", width: "100vw" }}>
         <Grid.Col span={12}>
           <Center>

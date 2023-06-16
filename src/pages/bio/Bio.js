@@ -1,8 +1,14 @@
 import { Center, Grid, Text, Title } from "@mantine/core";
 
 import React from "react";
+import { useInView } from "react-intersection-observer";
 
-export default function Bio() {
+export default function Bio({ section, onVisible }) {
+  const { ref } = useInView({
+    threshold: 0.6,
+    onChange: (inView, entry) => inView && onVisible(section),
+  });
+
   return (
     <div
       style={{
@@ -10,7 +16,9 @@ export default function Bio() {
         marginTop: "9vh",
         marginBottom: "5vh",
       }}
-      id="section-1"
+      key={`section-${section}`}
+      id={`section-${section}`}
+      ref={ref}
     >
       <Grid justify="center">
         <Grid.Col span={8}>

@@ -125,7 +125,7 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
                 variant="gradient"
                 gradient={{ from: "cyan", to: "teal" }}
                 leftIcon={<MdOutlinePerson />}
-                onClick={() => scrollToSectionByName("bio")}
+                onClick={() => scrollToSectionByName("about")}
               >
                 About
               </Button>
