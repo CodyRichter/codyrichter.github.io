@@ -8,9 +8,9 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
+import { FiMessageSquare, FiMinimize } from "react-icons/fi";
 import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
-import { FiMinimize } from "react-icons/fi";
 import { HiOutlineDocument } from "react-icons/hi";
 import { MdOutlinePerson } from "react-icons/md";
 import React from "react";
@@ -147,9 +147,20 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
                 variant="gradient"
                 gradient={{ from: "blue", to: "teal" }}
                 leftIcon={<HiOutlineDocument />}
-                onClick={() => scrollToSectionByName("experience")}
+                onClick={() => scrollToSectionByName("timeline")}
               >
                 Experience
+              </Button>
+
+              <Divider />
+
+              <Button
+                variant="gradient"
+                gradient={{ from: "teal", to: "lightblue" }}
+                leftIcon={<FiMessageSquare />}
+                onClick={() => scrollToSectionByName("contact")}
+              >
+                Contact
               </Button>
 
               <Divider />

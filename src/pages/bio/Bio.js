@@ -42,8 +42,9 @@ export default function Bio({ section, onVisible }) {
               <Center>
                 <Text ta="center" fz="lg">
                   Hello! My name is Cody and I&apos;m a Software Engineer at
-                  Amazon where I develop tools and systems on the eCommerce team
-                  to make it easier for you to buy your favorite products.
+                  Amazon where I develop tools and systems on the eCommerce
+                  Financial Ingegration (eCFI) team to make it easier for you to
+                  buy your favorite products.
                   {/* TODO: If I get a new job fill out this section */}
                   {/* I previously worked at XXX on the YYY team building ZZZ for AAA. */}
                 </Text>

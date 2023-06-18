@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Bio from "./pages/bio/Bio";
+import Contact from "./pages/contact/Contact";
 import ErrorPage from "./pages/ErrorPage";
 import FloatingActionNavButton from "./shared/nav/FloatingActionNavButton";
 import FloatingSideNav from "./shared/nav/FloatingSideNav";
@@ -16,6 +17,7 @@ import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import Particles from "react-tsparticles";
 import Projects from "./pages/projects/Projects";
+import Timeline from "./pages/timeline/Timeline";
 import { loadLinksPreset } from "tsparticles-preset-links";
 import { particlePattern } from "./styles/backgroundParticles";
 import useIsMobile from "./utils/useIsMobile";
@@ -35,6 +37,8 @@ function App() {
     home: 0,
     about: 1,
     projects: 2,
+    timeline: 3,
+    contact: 4,
   };
 
   const scrollToSectionById = (id) => {
@@ -116,6 +120,17 @@ function App() {
                   section={sectionMap["projects"]}
                   onVisible={() => setActiveSection(sectionMap["projects"])}
                 />
+
+                <Timeline
+                  section={sectionMap["timeline"]}
+                  onVisible={() => setActiveSection(sectionMap["timeline"])}
+                />
+
+                <Contact
+                  section={sectionMap["contact"]}
+                  onVisible={() => setActiveSection(sectionMap["contact"])}
+                />
+
                 <FooterCentered />
               </>
             }

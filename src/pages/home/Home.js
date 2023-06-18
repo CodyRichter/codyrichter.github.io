@@ -40,7 +40,12 @@ function Home({ section, onVisible }) {
 
   return (
     <div key={`section-${section}`} id={`section-${section}`} ref={ref}>
-      <Grid style={{ marginTop: "12vh", width: "100vw" }}>
+      <Grid
+        style={{
+          marginTop: "12vh",
+          width: "100vw",
+        }}
+      >
         <Grid.Col span={12}>
           <Center>
             <Avatar
