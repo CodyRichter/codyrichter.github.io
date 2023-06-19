@@ -16,7 +16,7 @@ import { useInView } from "react-intersection-observer";
 
 export default function Timeline({ section, onVisible }) {
   const { ref } = useInView({
-    threshold: 0.6,
+    threshold: 0.5,
     onChange: (inView, entry) => inView && onVisible(section),
   });
 

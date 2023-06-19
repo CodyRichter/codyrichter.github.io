@@ -4,6 +4,7 @@ import React, { cloneElement } from "react";
 import { FaGithub } from "react-icons/fa";
 import { IoIosPaper } from "react-icons/io";
 import { isEmpty } from "lodash";
+import useIsMobile from "../../utils/useIsMobile";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -46,6 +47,8 @@ const ProjectCard = ({
 }) => {
   const { classes } = useStyles();
 
+  const isMobile = useIsMobile();
+
   return (
     <Card
       shadow="sm"
@@ -64,7 +67,10 @@ const ProjectCard = ({
         </Text>
         <br />
       </Card.Section>
-      <Button.Group style={{ marginTop: "auto" }}>
+      <Button.Group
+        style={{ marginTop: "auto" }}
+        orientation={isMobile ? "vertical" : "horizontal"}
+      >
         {!isEmpty(githubLink) && (
           <Button
             fullWidth

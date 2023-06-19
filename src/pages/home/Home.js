@@ -8,10 +8,10 @@ import {
   Text,
 } from "@mantine/core";
 import { CiLinkedin, CiMail } from "react-icons/ci";
+import React, { useEffect } from "react";
 
 import AutoTypeTerminal from "./AutoTypeTerminal";
 import { MdPlace } from "react-icons/md";
-import React from "react";
 import { VscGithub } from "react-icons/vsc";
 import { b64Image } from "./b64Image";
 import { notifications } from "@mantine/notifications";
@@ -42,8 +42,9 @@ function Home({ section, onVisible }) {
     <div key={`section-${section}`} id={`section-${section}`} ref={ref}>
       <Grid
         style={{
-          marginTop: "12vh",
+          paddingTop: "12vh",
           width: "100vw",
+          backgroundColor: isMobile ? "#232741" : "transparent",
         }}
       >
         <Grid.Col span={12}>

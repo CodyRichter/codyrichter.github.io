@@ -2,6 +2,7 @@ import { Button, createStyles, keyframes } from "@mantine/core";
 
 import React from "react";
 import { SlArrowDown } from "react-icons/sl";
+import useIsMobile from "../../utils/useIsMobile";
 
 const rotateIconDown = keyframes({
   from: { transform: "rotate(0deg)" },
@@ -29,26 +30,30 @@ const FloatingActionNavButton = ({
 }) => {
   const { classes } = useStyles();
 
+  const isMobile = useIsMobile();
+
   return (
-    <Button
-      style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "30px",
-        zIndex: 9999,
-      }}
-      variant="gradient"
-      size="lg"
-      onClick={scrollToNextSection}
-    >
-      <SlArrowDown
-        className={
-          currentSectionId === finalSectionId
-            ? classes.flippedIcon
-            : classes.normalIcon
-        }
-      />
-    </Button>
+    !isMobile && (
+      <Button
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "30px",
+          zIndex: 9999,
+        }}
+        variant="gradient"
+        size="lg"
+        onClick={scrollToNextSection}
+      >
+        <SlArrowDown
+          className={
+            currentSectionId === finalSectionId
+              ? classes.flippedIcon
+              : classes.normalIcon
+          }
+        />
+      </Button>
+    )
   );
 };
 

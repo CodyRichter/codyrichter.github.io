@@ -67,7 +67,7 @@ export default function Projects({ section, onVisible }) {
   ];
 
   const { ref } = useInView({
-    threshold: 0.6,
+    threshold: 0.5,
     onChange: (inView, entry) => inView && onVisible(section),
   });
 
@@ -81,7 +81,7 @@ export default function Projects({ section, onVisible }) {
       <Divider style={{ marginBottom: "1vh" }} />
 
       <Grid justify="center" gutter="lg">
-        <Grid.Col span={8}>
+        <Grid.Col span={10}>
           <Grid gutter="xl" justify="center">
             <Grid.Col span={12}>
               <Center>
@@ -99,7 +99,7 @@ export default function Projects({ section, onVisible }) {
             </Grid.Col>
 
             {projects.map((project) => (
-              <Grid.Col sm={6} xs={12} key={project.title}>
+              <Grid.Col sm={6} xs={11} key={project.title}>
                 <ProjectCard
                   title={project.title}
                   description={project.description}
