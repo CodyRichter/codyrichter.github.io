@@ -43,8 +43,10 @@ function Home({ section, onVisible }) {
       <Grid
         style={{
           paddingTop: "12vh",
-          width: "100vw",
-          backgroundColor: isMobile ? "#232741" : "transparent",
+          background: isMobile
+            ? "radial-gradient(circle, rgba(35,39,65,1) 0%, rgba(16,20,73,0.9009978991596639) 100%)"
+            : "transparent",
+          minHeight: "90vh",
         }}
       >
         <Grid.Col span={12}>

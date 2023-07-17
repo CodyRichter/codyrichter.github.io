@@ -99,7 +99,7 @@ export default function Timeline({ section, onVisible }) {
 
   return (
     <div
-      style={{ backgroundColor: "#ffffff", marginTop: "4vh" }}
+      style={{ marginTop: "4vh" }}
       key={`section-${section}`}
       id={`section-${section}`}
       ref={ref}

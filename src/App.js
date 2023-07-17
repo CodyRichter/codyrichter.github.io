@@ -78,16 +78,21 @@ function App() {
             path="/"
             element={
               <>
+                {/* {!isMobile && ( */}
                 <FloatingSideNav
                   scrollToSectionByName={scrollToSectionByName}
                 />
-                <FloatingActionNavButton
-                  currentSectionId={activeSection}
-                  finalSectionId={Object.keys(sectionMap).length - 1}
-                  scrollToNextSection={() =>
-                    scrollToSectionById(activeSection + 1)
-                  }
-                />
+                {/* )} */}
+
+                {!isMobile && (
+                  <FloatingActionNavButton
+                    currentSectionId={activeSection}
+                    finalSectionId={Object.keys(sectionMap).length - 1}
+                    scrollToNextSection={() =>
+                      scrollToSectionById(activeSection + 1)
+                    }
+                  />
+                )}
 
                 <Home
                   section={sectionMap["home"]}
@@ -105,7 +110,6 @@ function App() {
                       height: "100%",
                       top: "0",
                       left: "0",
-                      width: "100%",
                       zIndex: -1,
                     }}
                   />

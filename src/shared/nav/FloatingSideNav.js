@@ -11,12 +11,12 @@ import {
 import { FiMessageSquare, FiMinimize } from "react-icons/fi";
 import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
+import { BsArrowLeft } from "react-icons/bs";
 import { HiOutlineDocument } from "react-icons/hi";
 import { MdOutlinePerson } from "react-icons/md";
 import React from "react";
 import { TbHammer } from "react-icons/tb";
 import { useDisclosure } from "@mantine/hooks";
-import useIsMobile from "../../utils/useIsMobile";
 
 const useStyles = createStyles((theme) => ({
   burgerClosed: {
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
     position: "fixed",
     top: "20px",
     left: "30px",
-    minWidth: "15vw",
+    minWidth: "15em",
     zIndex: 9999,
     borderRadius: "10px 10px 0px 0px",
   },
@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
     zIndex: 9998,
   },
   card: {
-    minWidth: "15vw",
+    minWidth: "15em",
     overflow: "hidden",
     padding: theme.spacing.xl,
     boxShadow: theme.shadows.lg,
@@ -83,13 +83,9 @@ const useStyles = createStyles((theme) => ({
 export default function FloatingSideNav({ scrollToSectionByName }) {
   const { classes } = useStyles();
 
-  const isMobile = useIsMobile();
-
   const [opened, { toggle }] = useDisclosure(false);
 
-  return isMobile ? (
-    <></>
-  ) : (
+  return (
     <>
       <Button
         variant="gradient"
@@ -100,7 +96,7 @@ export default function FloatingSideNav({ scrollToSectionByName }) {
       >
         {opened ? (
           <>
-            <FiMinimize />
+            <BsArrowLeft />
           </>
         ) : (
           <RiMenu3Line />
