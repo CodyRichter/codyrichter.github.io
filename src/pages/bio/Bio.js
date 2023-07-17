@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 export default function Bio({ section, onVisible }) {
   const { ref } = useInView({
-    threshold: 0.6,
+    threshold: 0.4,
     onChange: (inView, entry) => inView && onVisible(section),
   });
 

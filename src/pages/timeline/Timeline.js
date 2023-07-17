@@ -16,6 +16,8 @@ import { useInView } from "react-intersection-observer";
 
 export default function Timeline({ section, onVisible }) {
   const { ref } = useInView({
+    // TODO: Figure out the best threshold. This might vary depending on screen size?
+    // TODO: Also modify the threshold value for the Projects page due to similar length.
     threshold: 0.5,
     onChange: (inView, entry) => inView && onVisible(section),
   });
@@ -32,7 +34,7 @@ export default function Timeline({ section, onVisible }) {
     {
       name: "Rescue Lab - UMass Amherst",
       title: "Graduate Research Assistant",
-      time: "Sep. 2021 - May 2023",
+      time: "Fall 2021 - Spring 2023",
       location: "Amherst, MA",
       icon: <FaSearch />,
       iconGradientMap: { from: "darkred", to: "red" },
@@ -56,7 +58,7 @@ export default function Timeline({ section, onVisible }) {
     {
       name: "Rescue Lab - UMass Amherst",
       title: "Undergraduate Research Assistant",
-      time: "Dec. 2020 - May 2021",
+      time: "Winter 2020 - Spring 2021",
       location: "Fully Remote",
       icon: <FaSearch />,
       iconGradientMap: { from: "darkred", to: "red" },
@@ -64,7 +66,7 @@ export default function Timeline({ section, onVisible }) {
     {
       name: "College of Information and Computer Science - UMass Amherst",
       title: "Undergraduate Course Assistant",
-      time: "Aug. 2019 - Dec. 2020",
+      time: "Fall 2019 - Winter 2020",
       location: "Amherst, MA",
       icon: <FaBookOpen />,
       iconGradientMap: { from: "darkred", to: "red" },

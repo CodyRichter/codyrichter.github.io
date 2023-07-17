@@ -67,7 +67,7 @@ export default function Projects({ section, onVisible }) {
   ];
 
   const { ref } = useInView({
-    threshold: 0.5,
+    threshold: 0.6,
     onChange: (inView, entry) => inView && onVisible(section),
   });
 
