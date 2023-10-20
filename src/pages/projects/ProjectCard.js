@@ -2,6 +2,7 @@ import { Button, Card, Text, createStyles, rem } from "@mantine/core";
 import React, { cloneElement } from "react";
 
 import { FaGithub } from "react-icons/fa";
+import FileSaver from "file-saver";
 import { IoIosPaper } from "react-icons/io";
 import { isEmpty } from "lodash";
 import useIsMobile from "../../utils/useIsMobile";
@@ -68,7 +69,7 @@ const ProjectCard = ({
         setLoading(false);
       })
       .then((data) => {
-        window.open(data.url, "_blank");
+        FileSaver.saveAs(data.url, paperName);
         setLoading(false);
       })
       .catch((error) => {
@@ -115,7 +116,6 @@ const ProjectCard = ({
             fullWidth
             leftIcon={<IoIosPaper size={20} />}
             loading={loading}
-            loaderProps={{ type: "dots" }}
             onClick={downloadPaper}
             variant="outline"
           >

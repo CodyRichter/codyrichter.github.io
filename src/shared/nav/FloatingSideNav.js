@@ -8,10 +8,10 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-import { FiMessageSquare, FiMinimize } from "react-icons/fi";
 import { RiHome2Line, RiMenu3Line } from "react-icons/ri";
 
 import { BsArrowLeft } from "react-icons/bs";
+import { FiMessageSquare } from "react-icons/fi";
 import { HiOutlineDocument } from "react-icons/hi";
 import { MdOutlinePerson } from "react-icons/md";
 import React from "react";
