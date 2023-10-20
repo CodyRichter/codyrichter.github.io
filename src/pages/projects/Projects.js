@@ -40,8 +40,7 @@ export default function Projects({ section, onVisible }) {
         "This project uses transformer-based neural language models to score short open-ended questions. using SentenceBERT and cosine-similarity as a comparison metric. Furthermore, the multitask performance of the T5 - Text-To-Text transformer model is leveraged and a novel way of combining its downstream tasks for Automatic Short-Answer Grading is proposed.",
       githubLink:
         "https://github.com/CodyRichter/Automatic-Short-Answer-Grading",
-      paperLink:
-        "https://github-website-paper-downloads.s3.amazonaws.com/asag-cody-richter.pdf",
+      paperName: "asag-cody-richter.pdf",
       icon: <GrScorecard />,
       iconColor: "green",
     },
@@ -50,8 +49,7 @@ export default function Projects({ section, onVisible }) {
       description:
         "Using a new dataset consisting of underwater photos of cold-water fish species across in low-light high-turbidity environments, multiple dataset enhancement techniques are implemented to improve image features. Then, a new YOLOv7 model is trained on this dataset and a new baseline for underwater fish localization and classification is established.",
       githubLink: "https://github.com/scrs22/670_fish_project",
-      paperLink:
-        "https://github-website-paper-downloads.s3.amazonaws.com/cv-fish-cody-richter.pdf",
+      paperName: "cv-fish-cody-richter.pdf",
       icon: <GiDoubleFish />,
       iconColor: "orange",
     },
@@ -59,8 +57,7 @@ export default function Projects({ section, onVisible }) {
       title: "CloudTutor",
       description:
         "CloudTutor is an intelligent tutoring system designed to provide students with a personalized learning experience in cloud computing. This paper describes the design of the CloudTutor system, and presents a framework for the development of the intelligent tutoring system and its effectiveness in improving student learning.",
-      paperLink:
-        "https://github-website-paper-downloads.s3.amazonaws.com/cloudtutor-cody-richter.pdf",
+      paperName: "cloudtutor-cody-richter.pdf",
       icon: <HiOutlineCloud />,
       iconColor: "blue",
     },
@@ -104,7 +101,7 @@ export default function Projects({ section, onVisible }) {
                   title={project.title}
                   description={project.description}
                   githubLink={project.githubLink}
-                  paperLink={project.paperLink}
+                  paperName={project.paperName}
                   icon={project.icon}
                   iconColor={project.iconColor}
                 />

@@ -41,13 +41,41 @@ const ProjectCard = ({
   title,
   description,
   githubLink = null,
-  paperLink = null,
+  paperName = null,
   icon,
   iconColor = "black",
 }) => {
   const { classes } = useStyles();
 
   const isMobile = useIsMobile();
+
+  const [loading, setLoading] = React.useState(false);
+
+  function downloadPaper() {
+    setLoading(true);
+    fetch(
+      "https://4sjd3sgsbr7meldtvulsute5ou0hjtzv.lambda-url.us-east-1.on.aws/",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          file_name: paperName,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(false);
+      })
+      .then((data) => {
+        window.open(data.url, "_blank");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoading(false);
+      });
+  }
 
   return (
     <Card
@@ -82,11 +110,13 @@ const ProjectCard = ({
           </Button>
         )}
 
-        {!isEmpty(paperLink) && (
+        {!isEmpty(paperName) && (
           <Button
             fullWidth
             leftIcon={<IoIosPaper size={20} />}
-            onClick={() => window.open(paperLink, "_blank")}
+            loading={loading}
+            loaderProps={{ type: "dots" }}
+            onClick={downloadPaper}
             variant="outline"
           >
             Read Paper
