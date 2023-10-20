@@ -2,6 +2,7 @@
 
 body {
   margin: 0;
+  padding: 0;
   max-width: 100vw;
   font-weight: normal;
   font-size-adjust: inherit;
@@ -11,7 +12,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-color: #232741;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 code {
@@ -27,50 +32,10 @@ code {
 .footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
   height: 2.5rem;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-.dashboardNavigationLogo {
-  margin-top: 1em;
-  margin-bottom: 1em;
-  width: 400px;
-}
-
-.loginLogo {
-  width: 200px;
-}
-
-.loginInputLabel {
-  font-weight: 500;
-  color: #545454;
-}
-
-.prizeCard {
-  background-color: #f5f7fb;
-}
-
-.primaryCard {
-  border-top: 0.35em solid #467fcf;
-}
-
-.secondaryCard {
-  border-top: 0.35em solid #0b2027;
-}
-
-.warningCard {
-  border-top: 0.35em solid #e0820b;
-}
-
-.successCard {
-  border-top: 0.35em solid #069126;
-}
-
-.errorCard {
-  border-top: 0.35em solid #7e0c1c;
 }

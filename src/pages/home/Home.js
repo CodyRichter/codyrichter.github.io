@@ -1,149 +1,166 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
 import {
+  ActionIcon,
   Avatar,
-  BottomNavigation,
-  BottomNavigationAction,
-  Container,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Stack,
-  Typography,
-} from "@mui/material";
+  Center,
+  Grid,
+  Menu,
+  Space,
+  Text,
+} from "@mantine/core";
+import { CiLinkedin, CiMail } from "react-icons/ci";
+import React, { useEffect } from "react";
+
 import AutoTypeTerminal from "./AutoTypeTerminal";
-import { Place } from "@mui/icons-material";
+import { MdPlace } from "react-icons/md";
+import { VscGithub } from "react-icons/vsc";
 import { b64Image } from "./b64Image";
-import { withStyles } from "@mui/styles";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import EmailIcon from "@mui/icons-material/Email";
+import { notifications } from "@mantine/notifications";
+import { useInView } from "react-intersection-observer";
 import useIsMobile from "../../utils/useIsMobile";
 
-const WhiteTextTypography = withStyles({
-  root: {
-    color: "#ffffff",
-    fontFamily: "Source Code Pro",
-  },
-})(Typography);
+const WhiteText = (props) => (
+  <Text
+    style={{
+      color: "#ffffff",
+      fontFamily: "Source Code Pro",
+      ...props.style,
+    }}
+  >
+    {props.children}
+  </Text>
+);
 
-function Home() {
-  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+function Home({ section, onVisible }) {
   const isMobile = useIsMobile();
 
+  const { ref } = useInView({
+    threshold: 0.6,
+    onChange: (inView, entry) => inView && onVisible(section),
+  });
+
   return (
-    <div>
-      <Grid style={{ marginTop: "12vh" }} container alignItems="center">
-        <Grid item xs={12} align="center">
-          <Avatar
-            variant="circular"
-            alt="A picture of Cody Richter"
-            src={`data:image/png;base64,${b64Image}`}
-            style={
-              isMobile
-                ? { width: 150, height: 150 }
-                : { width: 200, height: 200 }
-            }
-          />
-        </Grid>
+    <div key={`section-${section}`} id={`section-${section}`} ref={ref}>
+      <Grid
+        style={{
+          paddingTop: "12vh",
+          background: isMobile
+            ? "radial-gradient(circle, rgba(35,39,65,1) 0%, rgba(16,20,73,0.9009978991596639) 100%)"
+            : "transparent",
+          minHeight: "90vh",
+        }}
+      >
+        <Grid.Col span={12}>
+          <Center>
+            <Avatar
+              variant="outline"
+              alt="A picture of Cody Richter"
+              src={`data:image/png;base64,${b64Image}`}
+              style={
+                isMobile
+                  ? { width: 175, height: 175, borderRadius: "50%" }
+                  : { width: 250, height: 250, borderRadius: "50%" }
+              }
+            />
+          </Center>
+        </Grid.Col>
 
-        <Grid
-          item
-          xs={12}
-          align="center"
-          style={{ marginBottom: "2vh", marginTop: "2vh" }}
-        >
-          <WhiteTextTypography
-            variant="h2"
-            style={{
-              marginBottom: "2vh",
-              fontSize: isMobile ? "26pt" : "45pt",
-            }}
-          >
-            Cody Richter
-          </WhiteTextTypography>
-          <AutoTypeTerminal />
-        </Grid>
+        <Grid.Col span={12} style={{ marginBottom: "2vh", marginTop: "2vh" }}>
+          <Center>
+            <WhiteText
+              variant="h2"
+              style={{
+                marginBottom: "2vh",
+                fontSize: isMobile ? "26pt" : "40pt",
+              }}
+            >
+              Cody Richter
+            </WhiteText>
+          </Center>
+          <Center>
+            <AutoTypeTerminal />
+          </Center>
+        </Grid.Col>
 
-        <Grid item xs={12} align="center">
-          <br />
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={1}
-          >
-            <Place
+        <Grid.Col span={12} style={{ marginBottom: "2vh", marginTop: "2vh" }}>
+          <Center>
+            <VscGithub
+              size={isMobile ? 30 : 50}
+              color="white"
+              onClick={() => {
+                window.open("https://github.com/codyrichter", "_blank");
+              }}
+              style={{ cursor: "pointer" }}
+            />
+
+            <Space w="lg" />
+
+            <CiLinkedin
+              size={isMobile ? 40 : 60}
+              color="white"
+              onClick={() => {
+                window.open("https://linkedin.com/in/cody-richter", "_blank");
+              }}
+              style={{ cursor: "pointer" }}
+            />
+
+            <Space w="md" />
+
+            <Menu shadow="md" position="top">
+              <Menu.Target>
+                <ActionIcon
+                  size={isMobile ? 40 : 60}
+                  color="white"
+                  variant="transparent"
+                >
+                  <CiMail size={isMobile ? 40 : 60} color="white" />
+                </ActionIcon>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Label>Contact Via Email</Menu.Label>
+                <Menu.Item
+                  icon={<CiMail size={14} />}
+                  onClick={() => {
+                    window.open("mailto:cody@richter.codes");
+                  }}
+                >
+                  Send Email
+                </Menu.Item>
+                <Menu.Item
+                  icon={<CiMail size={14} />}
+                  onClick={() => {
+                    navigator.clipboard.writeText("cody@richter.codes");
+                    notifications.show({
+                      title: "Copied Email Address to Clipboard!",
+                      message: "cody@richter.codes",
+                      color: "teal",
+                      autoClose: 3000,
+                    });
+                  }}
+                >
+                  Copy Address
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Center>
+        </Grid.Col>
+
+        <Grid.Col span={12} style={{ marginBottom: "2vh", marginTop: "2vh" }}>
+          <Center>
+            <MdPlace
               style={{ fontSize: isMobile ? "2em" : "3em", color: "white" }}
             />
-            <WhiteTextTypography
+            &nbsp;
+            <WhiteText
               variant="h4"
               className="code"
               style={{ fontSize: isMobile ? "20pt" : "26pt" }}
             >
-              Amherst, MA
-            </WhiteTextTypography>
-          </Stack>
-        </Grid>
+              Seattle, WA
+            </WhiteText>
+          </Center>
+        </Grid.Col>
       </Grid>
-
-      <Container sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
-        <BottomNavigation
-          style={{
-            paddingBottom: "3vh",
-            background: "transparent",
-            boxShadow: "none",
-          }}
-        >
-          <BottomNavigationAction
-            label="Github"
-            icon={
-              <GitHubIcon
-                style={{ fontSize: isMobile ? "2em" : "4em", color: "white" }}
-              />
-            }
-            component={"a"}
-            href="https://github.com/CodyRichter/"
-            target="_blank"
-          />
-          <BottomNavigationAction
-            label="LinkedIn"
-            icon={
-              <LinkedInIcon
-                style={{ fontSize: isMobile ? "2em" : "4em", color: "white" }}
-              />
-            }
-            component={"a"}
-            href="https://www.linkedin.com/in/cody-richter/"
-            target="_blank"
-          />
-          <BottomNavigationAction
-            label="Website"
-            onClick={() => setEmailDialogOpen(true)}
-            icon={
-              <EmailIcon
-                style={{ fontSize: isMobile ? "3em" : "5em", color: "white" }}
-              />
-            }
-          />
-        </BottomNavigation>
-      </Container>
-
-      <Dialog
-        open={emailDialogOpen}
-        onClose={() => setEmailDialogOpen(false)}
-        maxWidth="md"
-      >
-        <Grid container alignItems="center" justifyContent="center">
-          <Grid item align="center">
-            <DialogTitle id="email-dialog-head">Connect Via Email</DialogTitle>
-            <DialogContent>
-              <DialogContentText>cody {"[at]"} richter.codes</DialogContentText>
-            </DialogContent>
-          </Grid>
-        </Grid>
-      </Dialog>
     </div>
   );
 }
