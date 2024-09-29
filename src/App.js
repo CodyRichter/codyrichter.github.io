@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Route,
   RouterProvider,
@@ -27,6 +27,16 @@ function App() {
 
   const particlesInit = useCallback(async (engine) => {
     await loadLinksPreset(engine);
+  }, []);
+
+  useEffect(() => {
+    const metricsUrl =
+      "https://i2d2nqrs5jpungxjxd2ppcpwyi0asqob.lambda-url.us-east-1.on.aws/?url=https://cody.richter.codes";
+    fetch(metricsUrl, {
+      method: "GET",
+    }).catch(() => {
+      console.error("Failed to send metrics...");
+    });
   }, []);
 
   const particlesLoaded = useCallback(async (container) => {}, []);
