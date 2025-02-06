@@ -41,10 +41,8 @@ export default function Bio({ section, onVisible }) {
               <Center>
                 <Text ta="center" fz="lg">
                   Hello! My name is Cody and I&apos;m a Software Engineer at
-                  Amazon where I develop tools and systems on the Amazon
-                  Financials Foundation Services (AFFS) team.
-                  {/* TODO: If I get a new job fill out this section */}
-                  {/* I previously worked at XXX on the YYY team building ZZZ for AAA. */}
+                  Affirm on the Loans Platform Team. Before this, I worked at
+                  Amazon in the Financial Foundational Services organization.
                 </Text>
               </Center>
             </Grid.Col>
