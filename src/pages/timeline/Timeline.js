@@ -12,6 +12,7 @@ import {
 import { FaAmazon, FaBookOpen, FaMapPin, FaSearch } from "react-icons/fa";
 import { MdComputer, MdEngineering, MdSecurity } from "react-icons/md";
 
+import { AffirmIcon } from "./AffirmIcon";
 import { useInView } from "react-intersection-observer";
 
 export default function Timeline({ section, onVisible }) {
@@ -24,9 +25,17 @@ export default function Timeline({ section, onVisible }) {
 
   let experiences = [
     {
+      name: "Affirm",
+      title: "Software Development Engineer II",
+      time: "Winter 2024 - Present",
+      location: "Fully Remote & Seattle, WA",
+      icon: <AffirmIcon />,
+      iconGradientMap: { from: "white", to: "lightblue" },
+    },
+    {
       name: "Amazon",
       title: "Software Development Engineer",
-      time: "Summer 2023 - Present",
+      time: "Summer 2023 - Winter 2024",
       location: "Seattle, WA",
       icon: <FaAmazon />,
       iconGradientMap: { from: "yellow", to: "orange" },
