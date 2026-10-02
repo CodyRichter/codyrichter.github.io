@@ -1,0 +1,20 @@
+/*
+ * Mantine 9 spaces timeline items by `spacing.xl` (32px) and pads both the item
+ * and its body; Mantine 6 used 24px spacing and a single 24px text offset.
+ * The `.root` prefix is needed to out-rank Mantine's own item selectors.
+ */
+.root .item {
+  padding-inline-start: 4px;
+
+  &:not(:first-of-type) {
+    margin-top: 24px;
+  }
+
+  &::before {
+    bottom: -24px;
+  }
+}
+
+.title {
+  font-weight: 500;
+}

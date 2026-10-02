@@ -1,0 +1,31 @@
+.terminal {
+  background-color: black;
+  padding: 1vh 1em;
+  min-width: 40vw;
+  border-radius: 0.75em;
+  text-align: left;
+}
+
+.text {
+  color: #ffffff;
+  font-size: 24pt;
+}
+
+.prompt {
+  color: white;
+  font-size: 20pt;
+}
+
+@media (max-width: 768px) {
+  .terminal {
+    min-width: 80vw;
+  }
+
+  .text {
+    font-size: 18pt;
+  }
+
+  .prompt {
+    font-size: 15pt;
+  }
+}

@@ -1,0 +1,22 @@
+import type { MetadataRoute } from "next";
+
+export const dynamic = "force-static";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Cody Richter Codes",
+    short_name: "Cody Richter",
+    description: "Personal website of Cody Richter.",
+    start_url: "/",
+    display: "standalone",
+    theme_color: "#232741",
+    background_color: "#ffffff",
+    icons: [
+      {
+        src: "/favicon.ico",
+        sizes: "64x64 32x32 24x24 16x16",
+        type: "image/x-icon",
+      },
+    ],
+  };
+}

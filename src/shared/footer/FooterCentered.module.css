@@ -1,0 +1,9 @@
+.footer {
+  margin-top: 7.5rem;
+  border-top: 0.0625rem solid var(--mantine-color-gray-2);
+}
+
+.links {
+  margin-top: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-sm);
+}

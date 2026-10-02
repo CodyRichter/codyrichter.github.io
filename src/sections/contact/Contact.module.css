@@ -1,0 +1,4 @@
+.link {
+  /* "Greycliff CF" was never loaded, so this has always rendered as the generic sans-serif. */
+  font-family: sans-serif;
+}

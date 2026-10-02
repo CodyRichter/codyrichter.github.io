@@ -1,0 +1,107 @@
+.hero {
+  padding-top: 12vh;
+  min-height: 90vh;
+  background: transparent;
+}
+
+/* v6 stretched the wrapped rows to fill the hero's min-height; in v9 the rows live in `inner`. */
+.heroInner {
+  min-height: calc(90vh - 12vh);
+}
+
+.row {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.avatar {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.white {
+  color: #ffffff;
+}
+
+.name {
+  margin-bottom: 2vh;
+  font-size: 40pt;
+}
+
+.icon {
+  display: inline-flex;
+  color: white;
+  cursor: pointer;
+}
+
+.github {
+  font-size: 50px;
+}
+
+.linkedin {
+  font-size: 60px;
+}
+
+.mailButton {
+  width: 60px;
+  height: 60px;
+}
+
+.mailIcon {
+  font-size: 60px;
+}
+
+.pin {
+  font-size: 3em;
+  color: white;
+}
+
+.location {
+  font-size: 26pt;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    background: radial-gradient(
+      circle,
+      rgba(35, 39, 65, 1) 0%,
+      rgba(16, 20, 73, 0.9009978991596639) 100%
+    );
+  }
+
+  .avatar {
+    width: 175px;
+    height: 175px;
+  }
+
+  .name {
+    font-size: 26pt;
+  }
+
+  .github {
+    font-size: 30px;
+  }
+
+  .linkedin {
+    font-size: 40px;
+  }
+
+  .mailButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mailIcon {
+    font-size: 40px;
+  }
+
+  .pin {
+    font-size: 2em;
+  }
+
+  .location {
+    font-size: 20pt;
+  }
+}

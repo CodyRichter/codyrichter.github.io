@@ -1,7 +1,17 @@
 # Cody Richter Codes
 
-This project uses the Node LTS version: `Now using node v16.13.1 (npm v8.1.2)`
+Personal site for [cody.richter.codes](https://cody.richter.codes), built with Next.js (static export), TypeScript, and Mantine.
 
-Run the project locally with `npm run start`
+Requires Node 22+ (`.nvmrc` pins 26): `nvm use`
 
-Deploy the site to live with: `npm run deploy`
+| Command             | What it does                                        |
+| ------------------- | --------------------------------------------------- |
+| `npm run dev`       | Local dev server at http://localhost:3000           |
+| `npm run build`     | Static export into `out/`                           |
+| `npm start`         | Serve `out/` locally, as GitHub Pages would         |
+| `npm run typecheck` | `tsc --noEmit`                                      |
+| `npm run lint`      | ESLint                                              |
+| `npm run deploy`    | Build, then publish `out/` to the `gh-pages` branch |
+
+Page content lives in `src/sections/` (and `src/data/` for projects and work history).
+`public/.nojekyll` must stay: without it GitHub Pages ignores the `_next/` folder.
