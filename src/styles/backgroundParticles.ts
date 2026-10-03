@@ -22,3 +22,15 @@ export const particlePattern: ISourceOptions = {
     },
   },
 };
+
+// Used when the visitor prefers reduced motion: same network, but drifting
+// very slowly instead of off entirely.
+export const calmParticlePattern: ISourceOptions = {
+  ...particlePattern,
+  particles: {
+    ...particlePattern.particles,
+    move: {
+      speed: 0.15,
+    },
+  },
+};

@@ -2,9 +2,16 @@
 
 import { useState } from "react";
 import Particles from "@tsparticles/react";
-import { particlePattern } from "@/styles/backgroundParticles";
+import {
+  calmParticlePattern,
+  particlePattern,
+} from "@/styles/backgroundParticles";
 
-export default function BackgroundParticles() {
+export default function BackgroundParticles({
+  calm = false,
+}: {
+  calm?: boolean;
+}) {
   const [loaded, setLoaded] = useState(false);
 
   // The fixed-size box avoids the canvas resizing (and re-seeding) while the
@@ -22,7 +29,7 @@ export default function BackgroundParticles() {
     >
       <Particles
         id="tsparticles"
-        options={particlePattern}
+        options={calm ? calmParticlePattern : particlePattern}
         particlesLoaded={async () => setLoaded(true)}
         style={{
           width: "100%",

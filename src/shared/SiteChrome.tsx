@@ -58,7 +58,7 @@ export default function SiteChrome({
 
   // `isMobile` is undefined until the first client-side check, so nothing
   // heavy mounts during hydration.
-  const showParticles = isMobile === false && !reduceMotion;
+  const showParticles = isMobile === false;
 
   return (
     <SetActiveSectionContext.Provider value={setActiveSection}>
@@ -77,7 +77,7 @@ export default function SiteChrome({
 
       {showParticles && (
         <ParticlesProvider init={loadLinksPreset}>
-          <BackgroundParticles />
+          <BackgroundParticles calm={reduceMotion} />
         </ParticlesProvider>
       )}
     </SetActiveSectionContext.Provider>
