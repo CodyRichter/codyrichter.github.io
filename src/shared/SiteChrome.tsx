@@ -1,7 +1,7 @@
 "use client";
 
 import { SECTIONS, type SectionName, sectionIndex } from "@/sections";
-import { createContext, useCallback, useContext, useState } from "react";
+import { useCallback } from "react";
 import { useMediaQuery, useReducedMotion } from "@mantine/hooks";
 
 import BackToTopButton from "./nav/BackToTopButton";
@@ -9,32 +9,20 @@ import TopNav from "./nav/TopNav";
 import { ParticlesProvider } from "@tsparticles/react";
 import dynamic from "next/dynamic";
 import { loadLinksPreset } from "@tsparticles/preset-links";
-import { useInView } from "react-intersection-observer";
+import { useActiveSection } from "./nav/useActiveSection";
 
-// Loaded only on desktop; mobile never downloads the particle engine.
+// Client-only, and loaded after the first media-query check so it never
+// mounts during hydration.
 const BackgroundParticles = dynamic(() => import("./BackgroundParticles"), {
   ssr: false,
 });
-
-const SetActiveSectionContext = createContext<(section: number) => void>(
-  () => {},
-);
-
-/** Marks the returned ref's element as the active section while it is in view. */
-export function useSectionInView(section: number, threshold: number) {
-  const setActiveSection = useContext(SetActiveSectionContext);
-  return useInView({
-    threshold,
-    onChange: (inView) => inView && setActiveSection(section),
-  });
-}
 
 export default function SiteChrome({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [activeSection, setActiveSection] = useState(0);
+  const activeSection = useActiveSection();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const reduceMotion = useReducedMotion();
 
@@ -58,12 +46,10 @@ export default function SiteChrome({
 
   // `isMobile` is undefined until the first client-side check, so nothing
   // heavy mounts during hydration.
-  const showParticles = isMobile === false;
+  const showParticles = isMobile !== undefined;
 
   return (
-    <SetActiveSectionContext.Provider value={setActiveSection}>
-      <div className="hero-backdrop" aria-hidden />
-
+    <>
       <TopNav
         activeSection={activeSection}
         scrollToSectionByName={scrollToSectionByName}
@@ -77,9 +63,9 @@ export default function SiteChrome({
 
       {showParticles && (
         <ParticlesProvider init={loadLinksPreset}>
-          <BackgroundParticles calm={reduceMotion} />
+          <BackgroundParticles mobile={isMobile} calm={reduceMotion} />
         </ParticlesProvider>
       )}
-    </SetActiveSectionContext.Provider>
+    </>
   );
 }

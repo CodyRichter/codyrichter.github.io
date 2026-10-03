@@ -1,12 +1,17 @@
+/* Fills the first screen; the navy behind it comes from `html`/`body`. `svh`
+   keeps it stable as the iOS Safari toolbar shows and hides. */
 .hero {
   padding-top: 12vh;
-  min-height: 90vh;
+  padding-top: 12svh;
+  min-height: 100vh;
+  min-height: 100svh;
   background: transparent;
 }
 
 /* v6 stretched the wrapped rows to fill the hero's min-height; in v9 the rows live in `inner`. */
 .heroInner {
-  min-height: calc(90vh - 12vh);
+  min-height: calc(100vh - 12vh);
+  min-height: calc(100svh - 12svh);
 }
 
 .row {
@@ -54,8 +59,10 @@
   cursor: pointer;
   transition: background-color 150ms ease;
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.14);
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.14);
+    }
   }
 
   &:focus-visible {
@@ -77,14 +84,6 @@
 }
 
 @media (max-width: 768px) {
-  .hero {
-    background: radial-gradient(
-      circle,
-      rgba(35, 39, 65, 1) 0%,
-      rgba(16, 20, 73, 0.9009978991596639) 100%
-    );
-  }
-
   .avatar {
     width: 175px;
     height: 175px;

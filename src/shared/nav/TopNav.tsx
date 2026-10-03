@@ -1,10 +1,9 @@
 "use client";
 
-import { Burger, Drawer, Stack } from "@mantine/core";
 import { SECTIONS, type SectionName, sectionIndex } from "@/sections";
 
+import Image from "next/image";
 import classes from "./TopNav.module.css";
-import { useDisclosure } from "@mantine/hooks";
 import { usePastHero } from "./usePastHero";
 
 const LINKS: { section: SectionName; label: string }[] = [
@@ -25,14 +24,6 @@ export default function TopNav({
   scrollToSectionByName,
 }: Props) {
   const pastHero = usePastHero();
-  const [opened, { toggle, close }] = useDisclosure(false);
-
-  const go = (section: SectionName) => {
-    close();
-    // Wait for the drawer to release its scroll lock before scrolling.
-    setTimeout(() => scrollToSectionByName(section), opened ? 250 : 0);
-  };
-
   const renderLink = (section: SectionName, label: string) => (
     <a
       key={section}
@@ -44,7 +35,7 @@ export default function TopNav({
       }
       onClick={(e) => {
         e.preventDefault();
-        go(section);
+        scrollToSectionByName(section);
       }}
     >
       {label}
@@ -57,58 +48,31 @@ export default function TopNav({
         <div className={classes.inner}>
           <a
             href="#"
-            className={`${classes.brand} mono`}
+            className={classes.home}
             data-visible={pastHero || undefined}
             tabIndex={pastHero ? 0 : -1}
+            aria-label="Back to top"
             onClick={(e) => {
               e.preventDefault();
-              go(SECTIONS[0]);
+              scrollToSectionByName(SECTIONS[0]);
             }}
           >
-            Cody Richter
+            <Image
+              className={classes.headshot}
+              src="/headshot.webp"
+              alt=""
+              width={72}
+              height={72}
+              loading="eager"
+            />
+            <span className={`${classes.brand} mono`}>Cody Richter</span>
           </a>
 
           <nav className={classes.links} aria-label="Primary">
             {LINKS.map(({ section, label }) => renderLink(section, label))}
           </nav>
-
-          <Burger
-            className={classes.burger}
-            opened={opened}
-            onClick={toggle}
-            color={pastHero ? "var(--mantine-color-gray-9)" : "white"}
-            aria-label={
-              opened ? "Close navigation menu" : "Open navigation menu"
-            }
-          />
         </div>
       </header>
-
-      <Drawer
-        opened={opened}
-        onClose={close}
-        position="top"
-        size="auto"
-        title="Menu"
-        classNames={{ title: "mono" }}
-      >
-        <Stack gap={0} component="nav" aria-label="Mobile">
-          {LINKS.map(({ section, label }) => (
-            <a
-              key={section}
-              href={`#section-${sectionIndex(section)}`}
-              className={classes.drawerLink}
-              data-active={activeSection === sectionIndex(section) || undefined}
-              onClick={(e) => {
-                e.preventDefault();
-                go(section);
-              }}
-            >
-              {label}
-            </a>
-          ))}
-        </Stack>
-      </Drawer>
     </>
   );
 }

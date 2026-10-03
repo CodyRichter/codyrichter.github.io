@@ -2,7 +2,8 @@
 
 import { IoIosArrowForward } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
-import { Modal, Portal, Text } from "@mantine/core";
+import { Portal, Text } from "@mantine/core";
+import MacAlert from "@/shared/MacAlert";
 import { useReducedMotion } from "@mantine/hooks";
 import Typist from "react-typist-component";
 import { SPINNER_VERBS } from "./spinnerVerbs";
@@ -20,26 +21,26 @@ interface ControlsProps {
   onMaximize: () => void;
 }
 
-const WindowControls = ({ onClose, onMinimize, onMaximize }: ControlsProps) => (
-  <div className={classes.controls}>
-    <button
-      type="button"
-      className={`${classes.dot} ${classes.close}`}
-      aria-label="Close terminal"
-      onClick={onClose}
-    />
-    <button
-      type="button"
-      className={`${classes.dot} ${classes.minimize}`}
-      aria-label="Minimize terminal"
-      onClick={onMinimize}
-    />
-    <button
-      type="button"
-      className={`${classes.dot} ${classes.maximize}`}
-      aria-label="Maximize terminal"
-      onClick={onMaximize}
-    />
+const TRAFFIC_LIGHTS = [
+  { key: "onClose", label: "Close terminal", color: "#ff5f57" },
+  { key: "onMinimize", label: "Minimize terminal", color: "#febc2e" },
+  { key: "onMaximize", label: "Maximize terminal", color: "#28c840" },
+] as const;
+
+// Each button paints its own dot as a centered background, so the visible dot
+// and the clickable box are always the same element.
+const WindowControls = (handlers: ControlsProps) => (
+  <div className={classes.trafficLights} role="group" aria-label="Window">
+    {TRAFFIC_LIGHTS.map(({ key, label, color }) => (
+      <button
+        key={key}
+        type="button"
+        className={classes.trafficLight}
+        style={{ "--light": color } as React.CSSProperties}
+        aria-label={label}
+        onClick={handlers[key]}
+      />
+    ))}
   </div>
 );
 
@@ -429,16 +430,13 @@ export default function AutoTypeTerminal() {
 
   return (
     <>
-      <Modal
+      <MacAlert
         opened={message !== null}
         onClose={() => setMessage(null)}
         title={message?.title}
-        centered
+        body={message?.body}
         zIndex={500}
-        size="sm"
-      >
-        {message?.body}
-      </Modal>
+      />
       {maximized && (
         <Portal>
           <div

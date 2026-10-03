@@ -6,7 +6,6 @@ import { FaGithub } from "react-icons/fa";
 import { IoIosPaper } from "react-icons/io";
 import type { Project } from "@/types";
 import classes from "./ProjectCard.module.css";
-import { useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 
 const PAPER_URL_ENDPOINT =
@@ -47,7 +46,6 @@ export default function ProjectCard({
   iconColor,
 }: Project) {
   const [loading, setLoading] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   async function downloadPaper() {
     if (!paperName) return;
@@ -85,10 +83,7 @@ export default function ProjectCard({
         </Text>
         <br />
       </Card.Section>
-      <Button.Group
-        className={classes.buttons}
-        orientation={isMobile ? "vertical" : "horizontal"}
-      >
+      <Button.Group className={classes.buttons}>
         {githubLink && (
           <Button
             fullWidth

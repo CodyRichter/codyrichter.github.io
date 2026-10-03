@@ -5,6 +5,19 @@ body {
   overflow-x: hidden;
 }
 
+/* Navy sits behind everything (the hero is transparent over it) so the iOS
+   status-bar tint and overscroll bounce match the hero. It goes on `html` only,
+   with `body` transparent (overriding Mantine's white): a `body` background
+   would paint over the z-index:-1 particle layer. Content sections and the
+   footer paint their own backgrounds. */
+html {
+  background-color: #232741;
+}
+
+body {
+  background-color: transparent;
+}
+
 html,
 body {
   height: 100%;
@@ -12,23 +25,4 @@ body {
 
 .mono {
   font-family: var(--font-plex-mono), "IBM Plex Mono", monospace;
-}
-
-/* Navy hero backdrop, in the prerendered HTML so the white hero text is never
-   shown on white while the particle engine loads. Desktop only. */
-.hero-backdrop {
-  display: none;
-}
-
-@media (min-width: 769px) {
-  .hero-backdrop {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: -1;
-    background-color: #232741;
-  }
 }

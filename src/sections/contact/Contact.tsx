@@ -91,7 +91,7 @@ function ContactCard({
 
 export default function Contact() {
   return (
-    <Section index={section} threshold={0.6} title="Contact" size="sm" divided>
+    <Section index={section} title="Contact" size="sm" divided>
       <Stack gap="xl">
         <ContactCard
           heading="Send an Email"

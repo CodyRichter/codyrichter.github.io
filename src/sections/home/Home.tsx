@@ -15,16 +15,13 @@ import Image from "next/image";
 import classes from "./Home.module.css";
 import { notifications } from "@mantine/notifications";
 import { sectionIndex } from "@/sections";
-import { useSectionInView } from "@/shared/SiteChrome";
 
 const EMAIL = "cody@richter.codes";
 const section = sectionIndex("home");
 
 export default function Home() {
-  const { ref } = useSectionInView(section, 0.6);
-
   return (
-    <div id={`section-${section}`} ref={ref}>
+    <div id={`section-${section}`}>
       <Grid classNames={{ root: classes.hero, inner: classes.heroInner }}>
         <Grid.Col span={12}>
           <Center>
@@ -34,7 +31,8 @@ export default function Home() {
               alt="A picture of Cody Richter"
               width={250}
               height={250}
-              priority
+              loading="eager"
+              fetchPriority="high"
             />
           </Center>
         </Grid.Col>

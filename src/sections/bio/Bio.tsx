@@ -19,13 +19,7 @@ const Year = ({ children }: { children: React.ReactNode }) => (
 
 export default function Bio() {
   return (
-    <Section
-      index={section}
-      threshold={0.4}
-      title="About Me"
-      size="sm"
-      afterHero
-    >
+    <Section index={section} title="About Me" size="sm">
       <Stack gap="xl" maw="65ch" mx="auto">
         <Text fz="lg">
           Hello! My name is Cody and I&apos;m a Software Engineer at Affirm on

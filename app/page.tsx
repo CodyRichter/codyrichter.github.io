@@ -5,16 +5,19 @@ import Home from "@/sections/home/Home";
 import Projects from "@/sections/projects/Projects";
 import SiteChrome from "@/shared/SiteChrome";
 import Timeline from "@/sections/timeline/Timeline";
+import classes from "./page.module.css";
 
 export default function Page() {
   return (
     <SiteChrome>
       <main>
         <Home />
-        <Bio />
-        <Projects />
-        <Timeline />
-        <Contact />
+        <div className={classes.content}>
+          <Bio />
+          <Projects />
+          <Timeline />
+          <Contact />
+        </div>
       </main>
       <FooterCentered />
     </SiteChrome>

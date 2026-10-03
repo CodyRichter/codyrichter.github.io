@@ -1,0 +1,11 @@
+/* White content area below the (transparent, navy-backed) hero. */
+.content {
+  background-color: var(--mantine-color-body);
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 769px) {
+  .content {
+    padding-bottom: 7.5rem;
+  }
+}

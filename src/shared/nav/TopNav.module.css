@@ -30,20 +30,42 @@
   padding-inline: 1rem;
 }
 
-.brand {
+/* Mini headshot (plus the name on wider screens) that returns to the top. It
+   keeps its space while hidden so the links never shift. */
+.home {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   color: inherit;
   text-decoration: none;
-  font-weight: 600;
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 200ms ease,
-    visibility 200ms;
+    opacity 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 400ms;
 
   &[data-visible] {
     opacity: 1;
     visibility: visible;
   }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 999px;
+  }
+}
+
+.headshot {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--mantine-color-gray-3);
+}
+
+.brand {
+  font-weight: 600;
 }
 
 .links {
@@ -75,14 +97,22 @@
     transition: transform 200ms ease;
   }
 
-  &:hover,
   &[data-active] {
     opacity: 1;
   }
 
-  &:hover::after,
   &[data-active]::after {
     transform: scaleX(1);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 1;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+    }
   }
 
   &:focus-visible {
@@ -91,42 +121,74 @@
   }
 }
 
-.burger {
-  display: none;
-}
-
-.drawerLink {
-  padding: 0.9rem 0.25rem;
-  font-size: 1.125rem;
-  color: var(--mantine-color-gray-9);
-  text-decoration: none;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
-
-  &[data-active] {
-    font-weight: 600;
-    color: var(--mantine-color-indigo-7);
-  }
-}
-
+/* On phones the four links fit in the bar itself, so there is no menu. */
 @media (max-width: 768px) {
-  .links {
-    display: none;
-  }
-
-  .burger {
-    display: block;
-    margin-left: auto;
-  }
-
-  /* Name stays hidden on phones; the burger sits alone on the right. */
+  /* Just the headshot on phones; the name is for wider screens. */
   .brand {
     display: none;
+  }
+
+  /* `cqw` below is the content width of this container (the bar minus its
+     1rem side padding), which lets the slide be a pure transform. */
+  .inner {
+    position: relative;
+    container-type: inline-size;
+  }
+
+  /* Centered over the hero; once the headshot appears (header is solid) the
+     links slide to the right edge. Only `transform` animates, so the move runs
+     on the compositor instead of re-laying-out every frame. */
+  .links {
+    position: absolute;
+    top: 0;
+    left: 0;
+    gap: 0.25rem;
+    height: 100%;
+    transform: translateX(calc(50cqw + 1rem - 50%));
+    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .nav[data-solid] .links {
+    transform: translateX(calc(100cqw + 1rem - 100%));
+  }
+
+  /* Each link spans the bar's height for a comfortable (44px+) tap target. */
+  .link {
+    display: flex;
+    align-items: center;
+    padding-inline: 0.5rem;
+    padding-block: 0;
+    font-size: 0.875rem;
+
+    &::after {
+      left: 0.5rem;
+      right: 0.5rem;
+      bottom: 0.65rem;
+    }
+  }
+}
+
+@media (max-width: 359px) {
+  .links {
+    gap: 0;
+  }
+
+  .link {
+    padding-inline: 0.375rem;
+    font-size: 0.8125rem;
+
+    &::after {
+      left: 0.375rem;
+      right: 0.375rem;
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nav,
-  .brand,
+  .home,
+  .links,
   .link::after {
     transition: none;
   }

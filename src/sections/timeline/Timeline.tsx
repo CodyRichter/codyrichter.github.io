@@ -17,13 +17,7 @@ const section = sectionIndex("timeline");
 
 export default function Timeline() {
   return (
-    <Section
-      index={section}
-      threshold={0.5}
-      title="Professional Experience"
-      size="sm"
-      divided
-    >
+    <Section index={section} title="Professional Experience" size="sm" divided>
       <Center>
         <MantineTimeline
           bulletSize={36}

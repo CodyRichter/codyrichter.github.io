@@ -1,5 +1,6 @@
 import type { ISourceOptions } from "@tsparticles/engine";
 
+// The canvas paints its own navy, matching the page background on `html`.
 export const particlePattern: ISourceOptions = {
   fullScreen: {
     enable: false,
@@ -32,5 +33,34 @@ export const calmParticlePattern: ISourceOptions = {
     move: {
       speed: 0.15,
     },
+  },
+};
+
+// Phones get a sparse starfield: small dots, no connecting lines, no pointer
+// interaction, and a lower frame rate to go easy on the battery.
+export const mobileParticlePattern: ISourceOptions = {
+  ...particlePattern,
+  fpsLimit: 30,
+  particles: {
+    number: { value: 40 },
+    color: { value: "#ffffff" },
+    links: { enable: false },
+    size: { value: { min: 1, max: 2 } },
+    opacity: { value: { min: 0.3, max: 0.8 } },
+    move: { enable: true, speed: 0.3 },
+  },
+  interactivity: {
+    events: {
+      onHover: { enable: false },
+      onClick: { enable: false },
+    },
+  },
+};
+
+export const calmMobileParticlePattern: ISourceOptions = {
+  ...mobileParticlePattern,
+  particles: {
+    ...mobileParticlePattern.particles,
+    move: { enable: true, speed: 0.1 },
   },
 };
