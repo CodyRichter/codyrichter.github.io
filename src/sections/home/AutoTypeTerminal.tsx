@@ -329,7 +329,7 @@ const UserLine = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-const MaximizedBody = ({ reduceMotion }: { reduceMotion: boolean }) => {
+const MaximizedBody = () => {
   const [script] = useState(() => buildScript(makeUsage()));
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -355,26 +355,6 @@ const MaximizedBody = ({ reduceMotion }: { reduceMotion: boolean }) => {
       body.removeEventListener("scroll", onScroll);
     };
   }, []);
-
-  if (reduceMotion) {
-    return (
-      <div className={classes.fullBody} ref={bodyRef}>
-        {script
-          .filter((step) => step.kind !== "think")
-          .map((step, i) =>
-            step.kind === "user" ? (
-              <UserLine key={i}>{step.text}</UserLine>
-            ) : step.kind === "block" ? (
-              <div key={i}>{step.node}</div>
-            ) : step.kind === "out" ? (
-              <OutLine key={i} tone={step.tone}>
-                {step.text}
-              </OutLine>
-            ) : null,
-          )}
-      </div>
-    );
-  }
 
   return (
     <div className={classes.fullBody} ref={bodyRef}>
@@ -476,7 +456,7 @@ export default function AutoTypeTerminal() {
                 ~/Projects/codys-cool-website
               </span>
             </div>
-            <MaximizedBody reduceMotion={reduceMotion} />
+            <MaximizedBody />
           </div>
         </Portal>
       )}
