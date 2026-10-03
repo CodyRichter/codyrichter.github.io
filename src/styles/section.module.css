@@ -1,6 +1,0 @@
-/* Shared by the About / Projects / Experience / Contact sections. */
-.title {
-  margin-top: 4vh;
-  /* 8px less than the original 3vh to offset Mantine 9's `Grid` row gap. */
-  margin-bottom: calc(3vh - 8px);
-}

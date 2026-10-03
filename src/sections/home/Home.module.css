@@ -19,6 +19,7 @@
   height: 250px;
   border-radius: 50%;
   object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.18);
 }
 
 .white {
@@ -26,40 +27,53 @@
 }
 
 .name {
-  margin-bottom: 2vh;
-  font-size: 40pt;
+  font-size: clamp(2.15rem, 1.2rem + 3.5vw, 3.35rem);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 }
 
+.tagline {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1rem, 0.85rem + 0.6vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
+}
+
+/* GitHub, LinkedIn, and email share one icon family at one size. */
 .icon {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
   color: white;
+  border-radius: 50%;
   cursor: pointer;
-}
+  transition: background-color 150ms ease;
 
-.github {
-  font-size: 50px;
-}
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+  }
 
-.linkedin {
-  font-size: 60px;
-}
-
-.mailButton {
-  width: 60px;
-  height: 60px;
-}
-
-.mailIcon {
-  font-size: 60px;
-}
-
-.pin {
-  font-size: 3em;
-  color: white;
+  &:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
 }
 
 .location {
-  font-size: 26pt;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.scrollCue {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -76,32 +90,22 @@
     height: 175px;
   }
 
-  .name {
-    font-size: 26pt;
+  .scrollCue {
+    display: flex;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    animation: nudge 2s ease-in-out infinite;
   }
+}
 
-  .github {
-    font-size: 30px;
+@keyframes nudge {
+  50% {
+    transform: translateY(6px);
   }
+}
 
-  .linkedin {
-    font-size: 40px;
-  }
-
-  .mailButton {
-    width: 40px;
-    height: 40px;
-  }
-
-  .mailIcon {
-    font-size: 40px;
-  }
-
-  .pin {
-    font-size: 2em;
-  }
-
-  .location {
-    font-size: 20pt;
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue {
+    animation: none;
   }
 }

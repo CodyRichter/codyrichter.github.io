@@ -12,13 +12,20 @@ import type { Metadata, Viewport } from "next";
 import Metrics from "@/shared/Metrics";
 import { Notifications } from "@mantine/notifications";
 import { theme } from "@/theme";
-import { Source_Code_Pro } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 
-const sourceCodePro = Source_Code_Pro({
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-plex-sans",
+});
+
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "600"],
   display: "swap",
-  variable: "--font-source-code-pro",
+  variable: "--font-plex-mono",
 });
 
 const SITE_URL = "https://cody.richter.codes";
@@ -67,7 +74,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sourceCodePro.variable} {...mantineHtmlProps}>
+    <html
+      lang="en"
+      className={`${plexSans.variable} ${plexMono.variable}`}
+      {...mantineHtmlProps}
+    >
       <head>
         <ColorSchemeScript forceColorScheme="light" />
       </head>

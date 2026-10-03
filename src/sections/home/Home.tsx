@@ -1,12 +1,17 @@
 "use client";
 
-import { ActionIcon, Center, Grid, Menu, Space, Text } from "@mantine/core";
-import { CiLinkedin, CiMail } from "react-icons/ci";
+import { Center, Grid, Group, Menu, Text } from "@mantine/core";
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconChevronDown,
+  IconCopy,
+  IconMail,
+  IconMapPin,
+} from "@tabler/icons-react";
 
 import AutoTypeTerminal from "./AutoTypeTerminal";
 import Image from "next/image";
-import { MdPlace } from "react-icons/md";
-import { VscGithub } from "react-icons/vsc";
 import classes from "./Home.module.css";
 import { notifications } from "@mantine/notifications";
 import { sectionIndex } from "@/sections";
@@ -36,64 +41,64 @@ export default function Home() {
 
         <Grid.Col span={12} className={classes.row}>
           <Center>
-            <Text className={`${classes.white} ${classes.name} mono`}>
+            <Text
+              component="h1"
+              className={`${classes.white} ${classes.name} mono`}
+            >
               Cody Richter
             </Text>
           </Center>
+          <Text className={classes.tagline}>Software Engineer @ Affirm</Text>
           <Center>
             <AutoTypeTerminal />
           </Center>
         </Grid.Col>
 
         <Grid.Col span={12} className={classes.row}>
-          <Center>
+          <Group justify="center" gap="md">
             <a
-              className={`${classes.icon} ${classes.github}`}
+              className={classes.icon}
               href="https://github.com/codyrichter"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
             >
-              <VscGithub />
+              <IconBrandGithub size={32} stroke={1.5} />
             </a>
 
-            <Space w="lg" />
-
             <a
-              className={`${classes.icon} ${classes.linkedin}`}
+              className={classes.icon}
               href="https://linkedin.com/in/cody-richter"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
             >
-              <CiLinkedin />
+              <IconBrandLinkedin size={32} stroke={1.5} />
             </a>
-
-            <Space w="md" />
 
             <Menu shadow="md" position="top">
               <Menu.Target>
-                <ActionIcon
-                  className={classes.mailButton}
-                  color="white"
-                  variant="transparent"
+                <button
+                  type="button"
+                  className={classes.icon}
+                  style={{ background: "none", border: 0, padding: 0 }}
                   aria-label="Contact via email"
                 >
-                  <CiMail className={classes.mailIcon} color="white" />
-                </ActionIcon>
+                  <IconMail size={32} stroke={1.5} />
+                </button>
               </Menu.Target>
 
               <Menu.Dropdown>
                 <Menu.Label>Contact Via Email</Menu.Label>
                 <Menu.Item
-                  leftSection={<CiMail size={14} />}
+                  leftSection={<IconMail size={14} />}
                   component="a"
                   href={`mailto:${EMAIL}`}
                 >
                   Send Email
                 </Menu.Item>
                 <Menu.Item
-                  leftSection={<CiMail size={14} />}
+                  leftSection={<IconCopy size={14} />}
                   onClick={() => {
                     navigator.clipboard.writeText(EMAIL);
                     notifications.show({
@@ -108,17 +113,19 @@ export default function Home() {
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
-          </Center>
+          </Group>
         </Grid.Col>
 
         <Grid.Col span={12} className={classes.row}>
           <Center>
-            <MdPlace className={classes.pin} />
-            &nbsp;
-            <Text className={`${classes.white} ${classes.location} mono`}>
+            <span className={`${classes.location} mono`}>
+              <IconMapPin size={16} aria-hidden />
               Seattle, WA
-            </Text>
+            </span>
           </Center>
+          <div className={classes.scrollCue} aria-hidden>
+            <IconChevronDown size={28} />
+          </div>
         </Grid.Col>
       </Grid>
     </div>

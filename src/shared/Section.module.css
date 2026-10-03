@@ -1,0 +1,25 @@
+/* Spacing is rem-based (not vh) so it stays predictable across screen heights. */
+.section {
+  padding-block: clamp(2.5rem, 7vw, 4.5rem);
+  /* Keeps the section clear of the fixed top nav (3.5rem) when scrolled to. */
+  scroll-margin-top: 3.5rem;
+}
+
+/* The hero backdrop is 100vh but the hero content is 90vh, so the section right
+   after it needs to clear that extra 10vh before its own padding. */
+.afterHero {
+  padding-top: calc(10vh + clamp(1.5rem, 4vw, 2.5rem));
+}
+
+.divided {
+  border-top: 0.0625rem solid var(--mantine-color-gray-3);
+}
+
+.container {
+  /* Mantine's Container supplies a 16px gutter on phones. */
+  width: 100%;
+}
+
+.title {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}

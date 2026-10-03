@@ -4,8 +4,8 @@ import { SECTIONS, type SectionName, sectionIndex } from "@/sections";
 import { createContext, useCallback, useContext, useState } from "react";
 import { useMediaQuery, useReducedMotion } from "@mantine/hooks";
 
-import FloatingActionNavButton from "./nav/FloatingActionNavButton";
-import FloatingSideNav from "./nav/FloatingSideNav";
+import BackToTopButton from "./nav/BackToTopButton";
+import TopNav from "./nav/TopNav";
 import { ParticlesProvider } from "@tsparticles/react";
 import dynamic from "next/dynamic";
 import { loadLinksPreset } from "@tsparticles/preset-links";
@@ -64,13 +64,12 @@ export default function SiteChrome({
     <SetActiveSectionContext.Provider value={setActiveSection}>
       <div className="hero-backdrop" aria-hidden />
 
-      <FloatingSideNav scrollToSectionByName={scrollToSectionByName} />
-
-      <FloatingActionNavButton
-        currentSectionId={activeSection}
-        finalSectionId={SECTIONS.length - 1}
-        scrollToNextSection={() => scrollToSectionById(activeSection + 1)}
+      <TopNav
+        activeSection={activeSection}
+        scrollToSectionByName={scrollToSectionByName}
       />
+
+      <BackToTopButton onClick={() => scrollToSectionById(0)} />
 
       {/* `children` is a stable server-rendered element, so section changes
           re-render only the nav and FAB above, not the page content. */}

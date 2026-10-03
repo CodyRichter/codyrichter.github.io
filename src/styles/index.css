@@ -11,7 +11,7 @@ body {
 }
 
 .mono {
-  font-family: var(--font-source-code-pro), "Source Code Pro", monospace;
+  font-family: var(--font-plex-mono), "IBM Plex Mono", monospace;
 }
 
 /* Navy hero backdrop, in the prerendered HTML so the white hero text is never

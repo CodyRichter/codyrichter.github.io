@@ -1,0 +1,133 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 3.5rem;
+  color: white;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+
+  &[data-solid] {
+    color: var(--mantine-color-gray-9);
+    background-color: rgba(255, 255, 255, 0.92);
+    border-bottom-color: var(--mantine-color-gray-3);
+    backdrop-filter: blur(8px);
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.brand {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 200ms;
+
+  &[data-visible] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.links {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.link {
+  position: relative;
+  padding-block: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.95rem;
+  opacity: 0.85;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--mantine-color-indigo-5),
+      var(--mantine-color-cyan-5)
+    );
+    transform: scaleX(0);
+    transition: transform 200ms ease;
+  }
+
+  &:hover,
+  &[data-active] {
+    opacity: 1;
+  }
+
+  &:hover::after,
+  &[data-active]::after {
+    transform: scaleX(1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+}
+
+.burger {
+  display: none;
+}
+
+.drawerLink {
+  padding: 0.9rem 0.25rem;
+  font-size: 1.125rem;
+  color: var(--mantine-color-gray-9);
+  text-decoration: none;
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+
+  &[data-active] {
+    font-weight: 600;
+    color: var(--mantine-color-indigo-7);
+  }
+}
+
+@media (max-width: 768px) {
+  .links {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    margin-left: auto;
+  }
+
+  /* Name stays hidden on phones; the burger sits alone on the right. */
+  .brand {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .brand,
+  .link::after {
+    transition: none;
+  }
+}
