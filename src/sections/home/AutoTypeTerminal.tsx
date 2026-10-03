@@ -316,7 +316,7 @@ const ClaudeHeader = () => (
             if (!e.metaKey && !e.ctrlKey) e.preventDefault();
           }}
         >
-          ~/Projects/codys-cool-website
+          ~/Projects/cody-richter-codes
         </a>
       </div>
     </div>
@@ -724,7 +724,7 @@ export default function AutoTypeTerminal() {
                 onMaximize={onMaximizeFull}
               />
               <span className={`${classes.title} mono`}>
-                ~/Projects/codys-cool-website
+                ~/Projects/cody-richter-codes
               </span>
             </div>
             <MaximizedBody />
@@ -745,7 +745,7 @@ export default function AutoTypeTerminal() {
             onMaximize={() => setMaximized(true)}
           />
           <span className={`${classes.title} mono`} aria-hidden>
-            ~/Projects/codys-cool-website
+            ~/Projects/cody-richter-codes
           </span>
         </div>
         <div className={classes.body}>
