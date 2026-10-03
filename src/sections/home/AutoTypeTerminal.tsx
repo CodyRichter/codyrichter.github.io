@@ -1,12 +1,13 @@
 "use client";
 
 import { IoIosArrowForward } from "react-icons/io";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Portal, Text } from "@mantine/core";
 import MacAlert from "@/shared/MacAlert";
 import { useReducedMotion } from "@mantine/hooks";
 import Typist from "react-typist-component";
 import { SPINNER_VERBS } from "./spinnerVerbs";
+import { AGENT_TASKS } from "./agentTasks";
 import classes from "./AutoTypeTerminal.module.css";
 
 const TerminalText = ({ children }: { children: React.ReactNode }) => (
@@ -45,9 +46,19 @@ const WindowControls = (handlers: ControlsProps) => (
 );
 
 type Step =
-  | { kind: "user"; text: string; wait: number }
-  | { kind: "out"; text: string; wait: number; tone?: "dim" | "red" }
-  // A childless element shown as one unit (see the note on ClaudeHeader).
+  // Typed at the shell prompt, inline, before Claude Code is running.
+  | { kind: "shell"; text: string; wait: number }
+  // Typed into the input box at the bottom, then moved into the transcript.
+  // `pause` holds the empty input on screen before typing starts.
+  | { kind: "user"; text: string; wait: number; pause?: number }
+  // `panic` starts or stops frantic "nonono" typing in the input box.
+  | {
+      kind: "out";
+      text: string;
+      wait: number;
+      tone?: "dim" | "red";
+      panic?: "start" | "stop";
+    }
   | { kind: "block"; node: React.ReactElement; wait: number }
   // A Claude-style "thinking" word that shows briefly, then is replaced.
   | { kind: "think"; word: string; wait: number };
@@ -87,15 +98,52 @@ const makeVerbPicker = () => {
   };
 };
 
+const AGENT_COUNT = 5;
+const AGENTS_MAX_MS = 15_000;
+const AGENTS_MIN_MS = 800;
+const AGENTS_GAP_MS = 1000;
+
+// Random finish times, at least AGENTS_GAP_MS apart, handed out in random
+// order. Picking sorted times from a range shortened by the gaps, then adding
+// one gap per position, spaces them out without ever passing AGENTS_MAX_MS.
+const makeFinishTimes = () => {
+  const room = AGENTS_MAX_MS - (AGENT_COUNT - 1) * AGENTS_GAP_MS;
+  const times = Array.from({ length: AGENT_COUNT }, () =>
+    randomBetween(AGENTS_MIN_MS, room),
+  )
+    .sort((a, b) => a - b)
+    .map((ms, i) => Math.round(ms + i * AGENTS_GAP_MS));
+  for (let i = times.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [times[i], times[j]] = [times[j], times[i]];
+  }
+  return times;
+};
+
 const buildScript = (usage: Usage): Step[] => {
   const nextVerb = makeVerbPicker();
+  // Each agent gets its own random task and finishes at its own random time,
+  // so they report in random order.
+  const taskPool = [...AGENT_TASKS];
+  const agents: Agent[] = makeFinishTimes().map((finishMs) => ({
+    task: taskPool.splice(Math.floor(Math.random() * taskPool.length), 1)[0],
+    finishMs,
+  }));
   return [
-    { kind: "user", text: "claude", wait: 900 },
+    { kind: "shell", text: "claude", wait: 900 },
     { kind: "block", node: <ClaudeHeader />, wait: 1500 },
-    { kind: "user", text: "help me get out of full screen", wait: 900 },
+    {
+      kind: "user",
+      text: "help me get out of full screen. Make no mistakes.",
+      wait: 900,
+    },
     { kind: "think", word: nextVerb(), wait: 4000 },
     { kind: "out", text: "● On it! Looking for the exit...", wait: 1000 },
-    { kind: "out", text: "  ⎿ Read(Terminal.tsx)", tone: "dim", wait: 900 },
+    {
+      kind: "block",
+      node: <ToolCall tool="Read" arg="Terminal.tsx" />,
+      wait: 900,
+    },
     {
       kind: "out",
       text: "  ⎿ Found it. It's a one-line change.",
@@ -115,11 +163,38 @@ const buildScript = (usage: Usage): Step[] => {
     },
     { kind: "think", word: nextVerb(), wait: 4000 },
     { kind: "out", text: "  ⎿ Found Rust compiler", tone: "dim", wait: 1200 },
-    { kind: "out", text: "● Perfect. Rewriting in Rust...", wait: 1000 },
+    {
+      kind: "out",
+      text: "● While I'm in here: Rust's zero-cost abstractions and fearless concurrency should make minimization ~40% faster going forward. I'll also add a few small improvements along the way.",
+      wait: 5000,
+    },
+    {
+      kind: "out",
+      text: "● I notice the working directory contains a significant number of files that don't use the .rs extension (.tsx, .ts, .css, .json). These appear to be legacy artifacts from a previous implementation and aren't load-bearing for the Rust rewrite.",
+      wait: 5500,
+    },
+    {
+      kind: "out",
+      text: "● To keep the codebase clean and idiomatic, I'll remove these extraneous files and begin the Rust rewrite. This is a safe, fully reversible operation.",
+      wait: 4000,
+    },
+    { kind: "out", text: "● Rewriting in Rust...", wait: 1000 },
+    {
+      kind: "block",
+      node: <ToolCall tool="Bash" arg="rm -rf ./*" />,
+      wait: 600,
+    },
+    {
+      kind: "out",
+      text: "  ⎿ Allowed by auto mode classifier",
+      tone: "dim",
+      wait: 900,
+    },
     {
       kind: "out",
       text: "  ⎿ Deleting old files (1 of 4,812)",
       tone: "dim",
+      panic: "start",
       wait: 500,
     },
     {
@@ -144,9 +219,15 @@ const buildScript = (usage: Usage): Step[] => {
       kind: "out",
       text: "Segmentation fault (core dumped)",
       tone: "red",
+      panic: "stop",
       wait: 2500,
     },
-    { kind: "user", text: "you deleted my whole website??", wait: 900 },
+    {
+      kind: "user",
+      text: "you deleted my whole website?? I said make no mistakes!!",
+      pause: 1500,
+      wait: 900,
+    },
     { kind: "think", word: nextVerb(), wait: 4000 },
     {
       kind: "out",
@@ -155,7 +236,7 @@ const buildScript = (usage: Usage): Step[] => {
     },
     {
       kind: "out",
-      text: "  That's on me, I'll do better next time.",
+      text: "● That's on me, I'll do better next time.",
       wait: 1800,
     },
     {
@@ -164,37 +245,20 @@ const buildScript = (usage: Usage): Step[] => {
       wait: 1200,
     },
     {
-      kind: "out",
-      text: "  ⎿ Agent 1: looking for the exit",
-      tone: "dim",
-      wait: 400,
+      kind: "block",
+      node: <AgentsRun agents={agents} />,
+      wait: AGENTS_MAX_MS + 600,
     },
     {
       kind: "out",
-      text: "  ⎿ Agent 2: looking for the exit",
-      tone: "dim",
-      wait: 400,
-    },
-    {
-      kind: "out",
-      text: "  ⎿ Agent 3: looking for the exit",
-      tone: "dim",
-      wait: 400,
-    },
-    {
-      kind: "out",
-      text: "  ⎿ Agent 4: looking for the exit",
-      tone: "dim",
-      wait: 400,
-    },
-    {
-      kind: "out",
-      text: "  ⎿ Agent 5: looking for the exit",
-      tone: "dim",
+      text: "● All agents have finished. Now I have the full picture.",
       wait: 1000,
     },
-    { kind: "think", word: nextVerb(), wait: 5000 },
-    { kind: "out", text: "● All 5 agents agree.", wait: 1200 },
+    {
+      kind: "out",
+      text: "● And honestly? That distinction matters. This isn't just a terminal window — it's your time, your focus, your journey. After careful deliberation, the subagents have reached a consensus: the yellow button is the key to minimization.",
+      wait: 1200,
+    },
     {
       kind: "out",
       text: "  To exit full screen, click the yellow minimize button at the top left of this terminal (or press Esc).",
@@ -220,8 +284,6 @@ const MASCOT_PIXELS: [number, number, number, number][] = [
   [8, 4, 1, 2],
 ];
 
-// Takes no children on purpose: react-typist-component treats a childless
-// element as one unit, so it appears and can be removed as a whole.
 const ClaudeHeader = () => (
   <div className={`${classes.line} ${classes.claudeHeader}`}>
     <svg
@@ -263,7 +325,6 @@ const ClaudeHeader = () => (
 
 const formatNumber = (n: number) => n.toLocaleString("en-US");
 
-// Takes no children on purpose (see ClaudeHeader).
 const UsageReport = ({ usage }: { usage: Usage }) => {
   const rows = [
     ["input", usage.input],
@@ -278,6 +339,21 @@ const UsageReport = ({ usage }: { usage: Usage }) => {
       <div className={classes.reportTitle}>Session</div>
       <div>Total cost: ${usage.cost.toFixed(2)}</div>
       <div>Total code changes: 1 line added, 30,417 lines removed</div>
+      <div className={classes.reportTitle}>Plan usage</div>
+      <div className={classes.bars} role="img" aria-label="Plan usage: 100%">
+        <div className={classes.barRow}>
+          <span className={classes.barLabel}>weekly limit</span>
+          <span className={classes.barTrack}>
+            <span
+              className={`${classes.bar} ${classes.barMaxed}`}
+              style={{ width: "100%" }}
+            />
+          </span>
+          <span className={`${classes.barValue} ${classes.maxed}`}>
+            100% used
+          </span>
+        </div>
+      </div>
       <div className={classes.reportTitle}>Usage (tokens)</div>
       <div className={classes.bars} role="img" aria-label="Token usage">
         {rows.map(([label, n]) => (
@@ -297,8 +373,35 @@ const UsageReport = ({ usage }: { usage: Usage }) => {
   );
 };
 
-// Takes no children on purpose: react-typist-component treats a childless
-// element as one unit, so a single Backspace removes the whole indicator.
+interface Agent {
+  task: string;
+  finishMs: number;
+}
+
+const AgentsRun = ({ agents }: { agents: Agent[] }) => {
+  const [done, setDone] = useState(() => agents.map(() => false));
+
+  useEffect(() => {
+    const timers = agents.map(({ finishMs }, i) =>
+      setTimeout(
+        () => setDone((prev) => prev.map((d, j) => d || j === i)),
+        finishMs,
+      ),
+    );
+    return () => timers.forEach(clearTimeout);
+  }, [agents]);
+
+  return (
+    <div>
+      {agents.map(({ task }, i) => (
+        <OutLine key={i} tone="dim">
+          {`  ⎿ Agent ${i + 1}: ${done[i] ? "Done." : task}`}
+        </OutLine>
+      ))}
+    </div>
+  );
+};
+
 const Thinking = ({ word }: { word: string }) => (
   <div className={`${classes.line} ${classes.thinking}`}>
     <span className={classes.spinner}>✻</span>
@@ -311,15 +414,27 @@ const OutLine = ({
   tone,
 }: {
   children: React.ReactNode;
-  tone?: "dim" | "red";
+  tone?: "dim" | "red" | "limit";
 }) => (
   <div className={`${classes.line} ${tone ? classes[tone] : ""}`}>
     <TerminalText>{children}</TerminalText>
   </div>
 );
 
-// While typing, react-typist-component passes `children` as an array (partial
-// text plus the cursor), so it must not be interpolated into a template string.
+// A tool call, colored like a terminal: purple tool name, cyan argument.
+const ToolCall = ({ tool, arg }: { tool: string; arg: string }) => (
+  <div className={classes.line}>
+    <TerminalText>
+      {"  ⎿ "}
+      <span className={classes.toolName}>{tool}(</span>
+      <span className={classes.toolArg}>{arg}</span>
+      <span className={classes.toolName}>)</span>
+    </TerminalText>
+  </div>
+);
+
+const Cursor = () => <span aria-hidden>|</span>;
+
 const UserLine = ({ children }: { children: React.ReactNode }) => (
   <div className={classes.line}>
     <Prompt />
@@ -330,9 +445,155 @@ const UserLine = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
+const TYPING_MS = 60;
+// How long a typed message sits in the input box before it is "sent".
+const SUBMIT_MS = 400;
+// Eight "no"s at most.
+const PANIC_MAX_CHARS = 16;
+
+// The reply to anything typed once the script is over.
+const UsageLimitNotice = () => (
+  <>
+    <OutLine tone="limit">
+      {"  ⎿ Usage limit reached ∙ resets in 718 hours"}
+    </OutLine>
+    <OutLine tone="limit">
+      {
+        "    We appreciate your enthusiasm! To keep Claude available for everyone, your access is paused until your limit resets. Need to keep building? Upgrade to Claude Pro Max Ultra++ for just $2,500/month to reset your limits instantly."
+      }
+    </OutLine>
+  </>
+);
+
 const MaximizedBody = () => {
   const [script] = useState(() => buildScript(makeUsage()));
+  const [entries, setEntries] = useState<React.ReactNode[]>([]);
+  const [shellText, setShellText] = useState<string | null>("");
+  const [inputOn, setInputOn] = useState(false);
+  const [inputText, setInputText] = useState("");
+  const [thinking, setThinking] = useState<string | null>(null);
+  // Once the script ends, the input box takes real typing.
+  const [interactive, setInteractive] = useState(false);
+  const [draft, setDraft] = useState("");
+  const sentCount = useRef(0);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Plays the script. Every state update happens after an await, so React's
+  // dev-mode double effect cancels the first run before it changes anything.
+  useEffect(() => {
+    let cancelled = false;
+    const timers = new Set<number>();
+    const sleep = (ms: number) =>
+      new Promise<void>((resolve) => {
+        const t = window.setTimeout(() => {
+          timers.delete(t);
+          if (!cancelled) resolve();
+        }, ms);
+        timers.add(t);
+      });
+    const type = async (text: string, show: (typed: string) => void) => {
+      const chars = Array.from(text);
+      for (let i = 1; i <= chars.length; i++) {
+        await sleep(TYPING_MS);
+        show(chars.slice(0, i).join(""));
+      }
+    };
+    const append = (node: React.ReactNode) =>
+      setEntries((prev) => [...prev, node]);
+
+    // The visitor mashing "nonono" while files are deleted. It runs alongside
+    // the script until stopped, then quickly erases itself.
+    let panic: { stop: boolean; done: Promise<void> } | null = null;
+    const startPanic = () => {
+      const state = { stop: false, done: Promise.resolve() };
+      state.done = (async () => {
+        let typed = "";
+        while (!state.stop && typed.length < PANIC_MAX_CHARS) {
+          await sleep(randomBetween(150, 260));
+          if (state.stop) break;
+          typed += typed.length % 2 ? "o" : "n";
+          setInputText(typed);
+        }
+        // Wait to be stopped, then freeze in shock before erasing.
+        while (!state.stop) await sleep(50);
+        await sleep(2000);
+        while (typed) {
+          await sleep(randomBetween(45, 80));
+          typed = typed.slice(0, -1);
+          setInputText(typed);
+        }
+      })();
+      return state;
+    };
+
+    (async () => {
+      for (const [i, step] of script.entries()) {
+        if (step.kind === "shell") {
+          await type(step.text, setShellText);
+          await sleep(step.wait);
+          setShellText(null);
+          append(<UserLine key={i}>{step.text}</UserLine>);
+          continue;
+        }
+        // Claude Code is running from here on, so its input box is too.
+        setInputOn(true);
+        if (step.kind === "user") {
+          if (panic) {
+            await panic.done;
+            panic = null;
+          }
+          await sleep(step.pause ?? 0);
+          await type(step.text, setInputText);
+          await sleep(SUBMIT_MS);
+          setInputText("");
+          append(<UserLine key={i}>{step.text}</UserLine>);
+        } else if (step.kind === "think") {
+          setThinking(step.word);
+          await sleep(step.wait);
+          setThinking(null);
+          continue;
+        } else if (step.kind === "out") {
+          // Claude's output appears all at once, like real tool output.
+          append(
+            <OutLine key={i} tone={step.tone}>
+              {step.text}
+            </OutLine>,
+          );
+          if (step.panic === "start") panic = startPanic();
+          if (step.panic === "stop" && panic) panic.stop = true;
+        } else {
+          append(<Fragment key={i}>{step.node}</Fragment>);
+        }
+        await sleep(step.wait);
+      }
+      setInteractive(true);
+    })();
+
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
+  }, [script]);
+
+  // Hand the cursor to the visitor, but don't pop up a keyboard on touch screens.
+  useEffect(() => {
+    if (interactive && window.matchMedia("(pointer: fine)").matches) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [interactive]);
+
+  const send = () => {
+    const text = draft.trim();
+    if (!text) return;
+    const n = sentCount.current++;
+    setEntries((prev) => [
+      ...prev,
+      <UserLine key={`sent${n}`}>{text}</UserLine>,
+      <UsageLimitNotice key={`limit${n}`} />,
+    ]);
+    setDraft("");
+  };
 
   // Follow new output as it arrives, unless the visitor scrolls up to reread.
   useEffect(() => {
@@ -358,40 +619,47 @@ const MaximizedBody = () => {
   }, []);
 
   return (
-    <div className={classes.fullBody} ref={bodyRef}>
-      <Typist typingDelay={60} cursor={<TerminalText>|</TerminalText>}>
-        {script.flatMap((step, i) => {
-          if (step.kind === "user") {
-            return [
-              <UserLine key={i}>{step.text}</UserLine>,
-              <Typist.Delay key={`d${i}`} ms={step.wait} />,
-            ];
-          }
-          if (step.kind === "block") {
-            return [
-              <Typist.Paste key={i}>{step.node}</Typist.Paste>,
-              <Typist.Delay key={`d${i}`} ms={step.wait} />,
-            ];
-          }
-          if (step.kind === "out") {
-            // Claude's output appears all at once, like real tool output.
-            return [
-              <Typist.Paste key={i}>
-                <OutLine tone={step.tone}>{step.text}</OutLine>
-              </Typist.Paste>,
-              <Typist.Delay key={`d${i}`} ms={step.wait} />,
-            ];
-          }
-          return [
-            <Typist.Paste key={i}>
-              <Thinking word={step.word} />
-            </Typist.Paste>,
-            <Typist.Delay key={`d${i}`} ms={step.wait} />,
-            <Typist.Backspace key={`b${i}`} count={1} />,
-          ];
-        })}
-      </Typist>
-    </div>
+    <>
+      <div className={classes.fullBody} ref={bodyRef}>
+        {entries}
+        {shellText !== null && (
+          <UserLine>
+            {shellText}
+            <Cursor />
+          </UserLine>
+        )}
+        {thinking && <Thinking word={thinking} />}
+      </div>
+      {inputOn && (
+        <div className={`${classes.inputArea} mono`}>
+          <div className={classes.inputBox}>
+            <Prompt />
+            {interactive ? (
+              <input
+                ref={inputRef}
+                className={`${classes.inputField} mono`}
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.nativeEvent.isComposing) send();
+                }}
+                aria-label="Message Claude"
+                autoComplete="off"
+                spellCheck={false}
+                enterKeyHint="send"
+              />
+            ) : (
+              <TerminalText>
+                &nbsp;
+                {inputText}
+                <Cursor />
+              </TerminalText>
+            )}
+          </div>
+          <div className={classes.modeLine}>⏵⏵ auto mode on</div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -412,6 +680,11 @@ export default function AutoTypeTerminal() {
     setMessage({
       title: "No can do.",
       body: "If you want to go smaller than this, use your own terminal...",
+    });
+  const onMaximizeFull = () =>
+    setMessage({
+      title: "“Terminal” can’t be made any larger.",
+      body: "There isn’t enough display space available to enlarge this window. To continue, purchase a larger display and try again. Might we recommend the Studio Display XDR?",
     });
 
   useEffect(() => {
@@ -448,7 +721,7 @@ export default function AutoTypeTerminal() {
               <WindowControls
                 onClose={onClose}
                 onMinimize={() => setMaximized(false)}
-                onMaximize={() => setMaximized(false)}
+                onMaximize={onMaximizeFull}
               />
               <span className={`${classes.title} mono`}>
                 ~/Projects/codys-cool-website

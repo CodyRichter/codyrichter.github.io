@@ -89,6 +89,51 @@
   margin-bottom: 0.75rem;
 }
 
+/* Claude Code's input box, pinned under the scrolling transcript. */
+.inputArea {
+  flex: none;
+  padding: 0 1.5rem 1rem;
+  text-align: left;
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.inputBox .text {
+  min-width: 0;
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+}
+
+.inputBox .prompt {
+  flex: none;
+  font-size: 1rem;
+}
+
+.inputField {
+  flex: 1;
+  min-width: 0;
+  margin-left: 0.6rem;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  caret-color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.modeLine {
+  padding: 0.35rem 0 0 0.75rem;
+  font-size: 1rem;
+  color: #f5c451;
+}
+
 .title {
   pointer-events: none;
   margin-left: 0.5rem;
@@ -136,6 +181,18 @@
 
 .red .text {
   color: #ff5f57;
+}
+
+.toolName {
+  color: #c678dd;
+}
+
+.toolArg {
+  color: #56b6c2;
+}
+
+.limit .text {
+  color: #ff6b3d;
 }
 
 .thinking .text {
@@ -233,6 +290,14 @@
 
 .barValue {
   text-align: right;
+}
+
+.barMaxed {
+  background-color: #ff6b3d;
+}
+
+.maxed {
+  color: #ff6b3d;
 }
 
 @media (max-width: 768px) {
